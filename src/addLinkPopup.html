@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+	<title>Add Bookmark</title>
+	<script language="javascript" type="text/javascript">
+	function addBookmark(myform) {
+		if (myform.bookmarkName.value != "") {
+			//adaugaLink(); persistent
+			//grid.append(var);
+			
+			var div=document.createElement('div');
+			div.innerHTML="<a href='"+ myform.bookmarkName.value +"'> Link1 </a>";
+			
+			window.opener.document.body.appendChild(div);//('text1').value
+		}
+		myform.bookmarkName.value="" // reset value
+		//this.close() // poate fi aici sau in alta parte
+	}
+	function closePopup() {
+		this.close()
+	}
+	</script>
+</head>
+<body>
+	<form>
+		Link: <input type="text" name="bookmarkName" size=40><br>
+	<button type="button" onclick="addBookmark(this.form)">Add</button>
+	<button type="button" onclick="closePopup()">Done</button>
+	</form>
+</body>

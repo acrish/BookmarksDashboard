@@ -38,4 +38,29 @@ function createBookmarksDivs(divId, numOfRows, numOfColumns) {
 
 window.onload = function() {
 	createBookmarksDivs('bookmarksDiv', NUM_OF_ROWS, NUM_OF_COLUMNS);
+	var res = supports_html5_storage();
+	if (!res)
+		alert("I don't support html5 storage! Please update your browser version.");
+	testPersistence();	
 };
+
+function supports_html5_storage() {
+  try {
+    return 'localStorage' in window && window['localStorage'] !== null;
+  } catch (e) {
+    return false;
+  }
+}
+
+// Test persistence:
+function testPersistence() {
+	var stored = localStorage["last_thumbnail"];
+	
+	if (!stored) {
+		localStorage["last_thumbnail"] = "works!";
+		alert("Now added sth to local storage");
+	}
+	alert("Last printed is " + localStorage["last_thumbnail"]);
+
+}
+

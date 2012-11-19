@@ -1,49 +1,59 @@
 var NUM_OF_ROWS = 3;
 var NUM_OF_COLUMNS = 4;
-var BOOKMARK_BACKGOUND_COLOR = 'white';
 var BOOKMARK_MARGIN = 10; 
 
+/**
+ * Gets an element by its id.
+ * @param id the id of the element
+ * @returns the object
+ */
 function getElement(id) {
 	return document.getElementById(id);
 }
 
-function createBookmarksDivs(divId, numOfRows, numOfColumns) {
-	var bookmarksWindow = getElement(divId);
+/**
+ * @param bookmarksWindowId the id of the div that contains the bookmarks
+ * @param numOfRows the number of rows
+ * @param numOfColumns the number of columns
+ * @return a vector with all bookmarks divs
+ */
+function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
+	var bookmarksWindow = getElement(bookmarksWindowId);
 	var bookmarksWindowWidth = parseInt(bookmarksWindow.style.width);
 	var bookmarksWindowHeight = parseInt(bookmarksWindow.style.height);
 	
 	var divMargin = BOOKMARK_MARGIN;
 	var divWidth = Math.floor(bookmarksWindowWidth / numOfColumns - divMargin * 2);
 	var divHeight = Math.floor(bookmarksWindowHeight / numOfRows -  divMargin * 2);
-//	alert(bookmarksWindowWidth + " " + divHeight + " " + divWidth); TODO
-	
+
+	var bookmarks = new Array(numOfRows);
 	for (var i = 0; i < numOfRows; i++) {
+		bookmarks[i] = new Array(numOfColumns);
 		var divRow = document.createElement("div");
 		for (var j = 0; j < numOfColumns; j++) {
-			var bookmarkDiv = document.createElement("div");
-			bookmarkDiv.style.width = divWidth + "px";
-			bookmarkDiv.style.height = divHeight + "px";
-			bookmarkDiv.style.background = 'white';
-			bookmarkDiv.style.float = "left";
-			bookmarkDiv.style.margin = divMargin + "px";
-			divRow.appendChild(bookmarkDiv);
-			
-			// TODO dev only
-			var txt = document.createTextNode("TODO " + i + " " + j);
-			bookmarkDiv.appendChild(txt); 
+			bookmarks[i][j] = new Bookmark(divWidth, divHeight, divMargin);
+			divRow.appendChild(bookmarks[i][j].getDiv());
 		}
 		bookmarksWindow.appendChild(divRow);
 	}
+	
+	return bookmarks;
 }
 
+/**
+ * Executes function on page loading.
+ */
 window.onload = function() {
-	createBookmarksDivs('bookmarksDiv', NUM_OF_ROWS, NUM_OF_COLUMNS);
+	var bookmarks = createBookmarksDivs('bookmarksDiv', NUM_OF_ROWS, NUM_OF_COLUMNS);
 	var res = supports_html5_storage();
 	if (!res)
 		alert("I don't support html5 storage! Please update your browser version.");
 	testPersistence();	
 };
 
+/**
+ * @returns {Boolean} true if browser supports html5 storage
+ */
 function supports_html5_storage() {
   try {
     return 'localStorage' in window && window['localStorage'] !== null;

@@ -1,0 +1,7 @@
+In urma feedback-ului primit in cadrul laboratorului, am decis sa ramanem la urmatoarea structura:
+	- dimensiuni variabile ale ferestrelor
+	- on hover: apar mai multe butoane mici pe fereastra
+	- buton langa steluta pentru a adauga tab-ul curent la bookmarks
+	- impartirea pe categorii
+	- pentru scroll: butoane in stanga si in dreapta
+	

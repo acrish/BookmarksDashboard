@@ -25,7 +25,7 @@ function createBookmarksDivs(divId, numOfRows, numOfColumns) {
 			bookmarkDiv.style.height = divHeight + "px";
 			bookmarkDiv.style.background = 'white';
 			bookmarkDiv.style.float = "left";
-			bookmarkDiv.style.margin = divMargin + "px"; // TODO
+			bookmarkDiv.style.margin = divMargin + "px";
 			divRow.appendChild(bookmarkDiv);
 			
 			// TODO dev only

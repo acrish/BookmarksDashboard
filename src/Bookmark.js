@@ -5,17 +5,19 @@
  * @param margin the margin of the bookmark div
  * @returns the newly created bookmark object
  */
-function Bookmark(width, height, margin) {
+function Bookmark(width, height, margin, id) {
 	// Create bookmark div.
 	var bookmarkDiv = document.createElement("div");
+	bookmarkDiv.id = "div"+id;
 	bookmarkDiv.style.width = width + "px";
 	bookmarkDiv.style.height = height + "px";
 	bookmarkDiv.style.margin = margin + "px";
 	bookmarkDiv.style.background = "white";
 	bookmarkDiv.style.float = "left";
+	bookmarkDiv.opacity = 1;
 	
 	// TODO(cmihail): dev only, delete it
-	var bookmarkImage = document.createTextNode("Click anywhere on the div to add/change image");
+	var bookmarkImage = document.createTextNode("Click anywhere on the div to add/change image\n" + id);
 	bookmarkDiv.appendChild(bookmarkImage); 
 	bookmarkDiv.onclick = function() {
 		var url = window.prompt("Enter iamge url:", "http://");
@@ -29,10 +31,21 @@ function Bookmark(width, height, margin) {
 		}
 	};
 	
+	// Drag and drop
+	bookmarkDiv.draggable = "true";
+	bookmarkDiv.ondragstart = function(event) {
+		event.dataTransfer.setData("Text", event.target.id);
+		bookmarkDiv.style.opacity = 0.2;
+	};
+	
 	/**
 	 * @return the div for this bookmark
 	 */
 	this.getDiv = function() {
 		return bookmarkDiv;
 	};
+	
+	this.getId = function() {
+		return id;
+	}
 }

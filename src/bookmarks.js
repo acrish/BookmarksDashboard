@@ -31,8 +31,36 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 		bookmarks[i] = new Array(numOfColumns);
 		var divRow = document.createElement("div");
 		for (var j = 0; j < numOfColumns; j++) {
-			bookmarks[i][j] = new Bookmark(divWidth, divHeight, divMargin);
-			divRow.appendChild(bookmarks[i][j].getDiv());
+			bookmarks[i][j] = new Bookmark(divWidth, divHeight, divMargin, i * numOfColumns + j);
+			
+			// Wrap the div so that dropping occurs in a specific area
+			var divWrapper = document.createElement("div");
+			divWrapper.id = "wrapper" + (i * numOfColumns + j);
+			divWrapper.style.width = (divWidth  + divMargin * 2) + "px";
+			divWrapper.style.height = (divHeight + divMargin * 2) + "px";
+			divWrapper.style.background = "grey";
+			divWrapper.style.float = "left";
+			divWrapper.appendChild(bookmarks[i][j].getDiv());
+			
+			// Drag and drop event handler
+			divWrapper.ondrop = function(event) {
+				// Exchange div from source wrapper with div from destination wrapper
+				event.preventDefault();
+				var data = event.dataTransfer.getData("Text");
+				var dstDiv = event.target;
+				var srcDiv = document.getElementById(data);
+				var srcWrapper = srcDiv.parentNode;
+				var dstWrapper = dstDiv.parentNode;
+				dstWrapper.removeChild(dstDiv);
+				dstWrapper.appendChild(srcDiv);
+				srcWrapper.appendChild(dstDiv);
+				srcDiv.style.opacity = 1;
+			};
+			divWrapper.ondragover = function(event) {
+				event.preventDefault();
+			};
+			
+			divRow.appendChild(divWrapper);
 		}
 		bookmarksWindow.appendChild(divRow);
 	}
@@ -48,7 +76,7 @@ window.onload = function() {
 	var res = supports_html5_storage();
 	if (!res)
 		alert("I don't support html5 storage! Please update your browser version.");
-	testPersistence();	
+	//testPersistence();	
 };
 
 /**

@@ -8,7 +8,6 @@
 function Bookmark(width, height, margin, id) {
 	// Variables
 	var pageLink = "";
-	var imageLink = "";
 	
 	// Create bookmark div.
 	var bookmarkDiv = createBookmarkDiv(width, height, margin, id);
@@ -26,8 +25,38 @@ function Bookmark(width, height, margin, id) {
 	bookmarkDiv.onmouseout = function() {
 		hoverButtonsDiv.style.display = "none";
 	};
-	//pageLink = "http://google.com";
-	// TODO(cmihail): dev only, delete it -> for Adriana
+	
+	var onHoverButtonClick = false; // TODO(cmihail): workaround for div/button click bug
+	
+	// Add change bookmark button.
+	var bookmarkButton = createBookmarkHoverButton("Bookmark", function() {
+		onHoverButtonClick = true;
+		openNewBookmarkWindow();
+	});
+	hoverButtonsDiv.appendChild(bookmarkButton);
+	
+	// Add image button.
+	var imageButton = createBookmarkHoverButton("Image", function() {
+		onHoverButtonClick = true;
+		var url = window.prompt("Enter image url:", "http://");
+		if (url != null && url != "") {
+			bookmarkDiv.style.backgroundImage = "url('" + url + "')";
+		}
+	});
+	hoverButtonsDiv.appendChild(imageButton);
+	
+	// Add category button.
+	var categoryButton= createBookmarkHoverButton("Category", function() {
+		onHoverButtonClick = true;
+		// Category
+		var category = window.prompt('Choose a category from: \n\n* '+ Categories.getAll() + "\n", 
+				'default');
+		var categoryCssClass = Categories.getCategoryClass(category);
+		bookmarkDiv.className = categoryCssClass;
+	});
+	hoverButtonsDiv.appendChild(categoryButton);
+	
+	// Load bookmarks links;
 	var noLinks = parseInt(localStorage["noLinks"]);
 	if (noLinks && id < noLinks) {
 		var name = "tab" + id;
@@ -47,40 +76,20 @@ function Bookmark(width, height, margin, id) {
 		}
 	}
 	bookmarkDiv.addEventListener("click", function() {
-		if (pageLink == "") {
-			newwindow=window.open('addLinkPopup.html','name','height=200,width=150');
-			$("#body").html("<div id='mynewdiv'>hi</div>");
-			if (window.focus) {newwindow.focus()}
-			//return false;
+		if (!onHoverButtonClick) {
+			if (pageLink == "") {
+				openNewBookmarkWindow();
+			} else {
+				// load file
+				window.location = pageLink;
+			}
 		} else {
-			// load file
-			window.location = pageLink;
+			onHoverButtonClick = false;
 		}
+		
 	});
 	//bookmarkOnClick);
-	
-	// Add image button.
-	var imageButton = createBookmarkHoverButton("Set Image", function() {
-		var url = window.prompt("Enter image url:", "http://");
-		if (url != null && url != "") {
-			if (bookmarkTxt != null) { // TODO(cmihail): dev only, delete
-				bookmarkDiv.removeChild(bookmarkTxt);
-				bookmarkTxt = null;
-			}
-			bookmarkDiv.style.backgroundImage = "url('" + url + "')";
-		}
-	});
-	hoverButtonsDiv.appendChild(imageButton);
-	
-	// Add category button.
-	var categoryButton= createBookmarkHoverButton("Set category", function() {
-		// Category
-		var category = window.prompt('Choose a category from: \n\n* '+ Categories.getAll() + "\n", 
-				'default');
-		var categoryCssClass = Categories.getCategoryClass(category);
-		bookmarkDiv.className = categoryCssClass;
-	});
-	hoverButtonsDiv.appendChild(categoryButton);
+
 	
 	/**
 	 * @return the div for this bookmark
@@ -137,6 +146,14 @@ function createBookmarkHoverButton(text, onclickFunction) {
 	hoverButton.value = text;
 	hoverButton.onclick = onclickFunction;
 	return hoverButton;
+}
+
+function openNewBookmarkWindow() {
+	newwindow = window.open('addLinkPopup.html','name','height=200,width=150');
+	$("#body").html("<div id='mynewdiv'>hi</div>");
+	if (window.focus) {
+		newwindow.focus();
+	}
 }
 
 function bookmarkOnClick(e) {

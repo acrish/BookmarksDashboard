@@ -23,19 +23,22 @@ function Bookmark(width, height, margin, id) {
 		hoverButtonsDiv.style.display = "none";
 	};
 	
-	// TODO(cmihail): dev only, delete it
-	var bookmarkImage = document.createElement("p");
-	bookmarkImage.innerHTML = "Bookmark: " + id;
-	bookmarkImage.style.marginTop = "40px";
-	bookmarkDiv.appendChild(bookmarkImage); 
+	// TODO(cmihail): dev only, delete it -> for Adriana
+	var bookmarkP = document.createElement("p");
+	bookmarkP.style.marginTop = "40px";
+	var bookmarkTxt = document.createElement("a");
+	bookmarkTxt.innerHTML = "Bookmark: " + (id + 1);
+	bookmarkTxt.href = "http://google.ro";
+	bookmarkP.appendChild(bookmarkTxt);
+	bookmarkDiv.appendChild(bookmarkP); 
 	
 	// Add image button.
-	var imageButton = createBookmarkHoverButton("Add Image", function() {
+	var imageButton = createBookmarkHoverButton("Set Image", function() {
 		var url = window.prompt("Enter image url:", "http://");
 		if (url != null && url != "") {
-			if (bookmarkImage != null) {
-				bookmarkDiv.removeChild(bookmarkImage);
-				bookmarkImage = null;
+			if (bookmarkTxt != null) { // TODO(cmihail): dev only, delete
+				bookmarkDiv.removeChild(bookmarkTxt);
+				bookmarkTxt = null;
 			}
 			bookmarkDiv.style.backgroundImage = "url('" + url + "')";
 		}
@@ -43,7 +46,7 @@ function Bookmark(width, height, margin, id) {
 	hoverButtonsDiv.appendChild(imageButton);
 	
 	// Add category button.
-	var categoryButton= createBookmarkHoverButton("Add category", function() {
+	var categoryButton= createBookmarkHoverButton("Set category", function() {
 		// Category
 		var category = window.prompt('Choose a category from: \n\n* '+ Categories.getAll() + "\n", 
 				'default');

@@ -23,8 +23,8 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	var bookmarksWindowHeight = parseInt(bookmarksWindow.style.height);
 	
 	var divMargin = BOOKMARK_MARGIN;
-	var divWidth = Math.floor(bookmarksWindowWidth / numOfColumns - divMargin * 2);
-	var divHeight = Math.floor(bookmarksWindowHeight / numOfRows -  divMargin * 2);
+	var divWidth = Math.floor(bookmarksWindowWidth / numOfColumns);
+	var divHeight = Math.floor(bookmarksWindowHeight / numOfRows);
 
 	var bookmarks = new Array(numOfRows);
 	for (var i = 0; i < numOfRows; i++) {
@@ -36,8 +36,8 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 			// Wrap the div so that dropping occurs in a specific area
 			var divWrapper = document.createElement("div");
 			divWrapper.id = "wrapper" + (i * numOfColumns + j);
-			divWrapper.style.width = (divWidth  + divMargin * 2) + "px";
-			divWrapper.style.height = (divHeight + divMargin * 2) + "px";
+			divWrapper.style.width = divWidth + "px";
+			divWrapper.style.height = divHeight + "px";
 			divWrapper.style.background = "grey";
 			divWrapper.style.float = "left";
 			divWrapper.appendChild(bookmarks[i][j].getDiv());

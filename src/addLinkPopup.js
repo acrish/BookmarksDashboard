@@ -12,8 +12,17 @@
 		var url=document.getElementById("tabUrl").value;
 		var category=document.getElementById("category").value;
 		if (category == "")
-			category = "Default"
-		//alert("Adding bookmark!"+category);
+			category = "Default";
+		
+		var noLinks = localStorage["noLinks"];
+		if (! noLinks)
+			localStorage["noLinks"] = 0;
+		var name="tab"+ noLinks;
+		localStorage[name] = url;
+		
+		noLinks ++;
+		localStorage["noLinks"] = noLinks;
+		
 		window.close();
 	}
 

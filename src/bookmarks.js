@@ -75,7 +75,8 @@ window.onload = function() {
 	var res = supports_html5_storage();
 	if (!res)
 		alert("I don't support html5 storage! Please update your browser version.");
-	//testPersistence();	
+	//testPersistence();
+	addToStore();
 };
 
 /**
@@ -91,13 +92,22 @@ function supports_html5_storage() {
 
 // Test persistence:
 function testPersistence() {
-	var stored = localStorage["last_thumbnail"];
+	var stored = localStorage["noLinks"];
 	
 	if (!stored) {
-		localStorage["last_thumbnail"] = "works!";
-		alert("Now added sth to local storage");
+		localStorage["noLinks"] = 0;
 	}
-	alert("Last printed is " + localStorage["last_thumbnail"]);
+	alert("No of links = " + localStorage["noLinks"]);
+	//alert("Last printed is " + localStorage["last_thumbnail"]);
 
+}
+
+function addToStore() {
+	var stored = localStorage["noLinks"];
+	
+	if (!stored) {
+		localStorage["noLinks"] = 0;
+	}
+	alert("No of links ==== " + localStorage["noLinks"]);
 }
 

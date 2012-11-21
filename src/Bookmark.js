@@ -28,19 +28,26 @@ function Bookmark(width, height, margin, id) {
 	};
 	
 	// TODO(cmihail): dev only, delete it -> for Adriana
-	var bookmarkP = document.createElement("p");
-	bookmarkP.style.marginTop = "40px";
-	var bookmarkTxt = document.createElement("a");
-	bookmarkTxt.style.display="block";
-	bookmarkTxt.style.height="100%";
-	bookmarkTxt.style.width="100%";
-	bookmarkTxt.innerHTML = "Bookmark: " + (id + 1);
-	bookmarkTxt.href = "http://google.ro";
-	bookmarkP.appendChild(bookmarkTxt);
-	bookmarkDiv.appendChild(bookmarkP); 
-	pageLink = "http://google.ro";
-	
+	var noLinks = parseInt(localStorage["noLinks"]);
+	if (noLinks && id < noLinks) {
+		var name = "tab" + id;
+		var url = localStorage[name];
+		if (url) {
+			var bookmarkP = document.createElement("p");
+			bookmarkP.style.marginTop = "40px";
+			var bookmarkTxt = document.createElement("a");
+			bookmarkTxt.style.display="block";
+			bookmarkTxt.style.height="100%";
+			bookmarkTxt.style.width="100%";
+			bookmarkTxt.innerHTML = "Bookmark: " + (id + 1);
+			bookmarkTxt.href = url;
+			bookmarkP.appendChild(bookmarkTxt);
+			bookmarkDiv.appendChild(bookmarkP);
+			pageLink = url;
+		}
+	}
 	bookmarkDiv.addEventListener("click", function() {
+		alert("page>>"+pageLink);
 		if (pageLink == "") {
 			newwindow=window.open('addLinkPopup.html','name','height=200,width=150');
 			$("#body").html("<div id='mynewdiv'>hi</div>");

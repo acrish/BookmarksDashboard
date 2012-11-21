@@ -54,7 +54,6 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 				dstWrapper.removeChild(dstDiv);
 				dstWrapper.appendChild(srcDiv);
 				srcWrapper.appendChild(dstDiv);
-				srcDiv.style.opacity = 1;
 			};
 			divWrapper.ondragover = function(event) {
 				event.preventDefault();

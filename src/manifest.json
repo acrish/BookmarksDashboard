@@ -1,5 +1,5 @@
 {
-  "name": "NTP prototyping extension",
+  "name": "BookmarksDashboard",
   "version": "1.1",
   "description": "Bookmarks Dashboard",
   "chrome_url_overrides" : {

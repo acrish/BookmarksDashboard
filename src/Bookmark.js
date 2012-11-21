@@ -6,6 +6,10 @@
  * @returns the newly created bookmark object
  */
 function Bookmark(width, height, margin, id) {
+	// Variables
+	pageLink = "";
+	imageLink = "";
+	
 	// Create bookmark div.
 	var bookmarkDiv = createBookmarkDiv(width, height, margin, id);
 	
@@ -27,10 +31,27 @@ function Bookmark(width, height, margin, id) {
 	var bookmarkP = document.createElement("p");
 	bookmarkP.style.marginTop = "40px";
 	var bookmarkTxt = document.createElement("a");
+	bookmarkTxt.style.display="block";
+	bookmarkTxt.style.height="100%";
+	bookmarkTxt.style.width="100%";
 	bookmarkTxt.innerHTML = "Bookmark: " + (id + 1);
 	bookmarkTxt.href = "http://google.ro";
 	bookmarkP.appendChild(bookmarkTxt);
 	bookmarkDiv.appendChild(bookmarkP); 
+	pageLink = "http://google.ro";
+	
+	bookmarkDiv.addEventListener("click", function() {
+		if (pageLink == "") {
+			newwindow=window.open('addLinkPopup.html','name','height=200,width=150');
+			$("#body").html("<div id='mynewdiv'>hi</div>");
+			if (window.focus) {newwindow.focus()}
+			//return false;
+		} else {
+			// load file
+			window.location = pageLink;
+		}
+	});
+	//bookmarkOnClick);
 	
 	// Add image button.
 	var imageButton = createBookmarkHoverButton("Set Image", function() {
@@ -110,4 +131,8 @@ function createBookmarkHoverButton(text, onclickFunction) {
 	hoverButton.value = text;
 	hoverButton.onclick = onclickFunction;
 	return hoverButton;
+}
+
+function bookmarkOnClick(e) {
+	alert("Bookmarck clicked!! ");
 }

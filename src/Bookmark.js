@@ -33,12 +33,11 @@ function Bookmark(width, height, margin, id) {
 	var imageButton = createBookmarkHoverButton("Add Image", function() {
 		var url = window.prompt("Enter image url:", "http://");
 		if (url != null && url != "") {
-			bookmarkDiv.removeChild(bookmarkImage);
-			bookmarkImage = document.createElement("img");
-			bookmarkImage.src = url;
-			bookmarkImage.style.width = bookmarkDiv.style.width;
-			bookmarkImage.style.height = bookmarkDiv.style.height;
-			bookmarkDiv.appendChild(bookmarkImage);
+			if (bookmarkImage != null) {
+				bookmarkDiv.removeChild(bookmarkImage);
+				bookmarkImage = null;
+			}
+			bookmarkDiv.style.backgroundImage = "url('" + url + "')";
 		}
 	});
 	hoverButtonsDiv.appendChild(imageButton);

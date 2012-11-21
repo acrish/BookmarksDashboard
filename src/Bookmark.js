@@ -7,8 +7,8 @@
  */
 function Bookmark(width, height, margin, id) {
 	// Variables
-	pageLink = "";
-	imageLink = "";
+	var pageLink = "";
+	var imageLink = "";
 	
 	// Create bookmark div.
 	var bookmarkDiv = createBookmarkDiv(width, height, margin, id);
@@ -26,7 +26,7 @@ function Bookmark(width, height, margin, id) {
 	bookmarkDiv.onmouseout = function() {
 		hoverButtonsDiv.style.display = "none";
 	};
-	
+	//pageLink = "http://google.com";
 	// TODO(cmihail): dev only, delete it -> for Adriana
 	var noLinks = parseInt(localStorage["noLinks"]);
 	if (noLinks && id < noLinks) {
@@ -47,7 +47,6 @@ function Bookmark(width, height, margin, id) {
 		}
 	}
 	bookmarkDiv.addEventListener("click", function() {
-		alert("page>>"+pageLink);
 		if (pageLink == "") {
 			newwindow=window.open('addLinkPopup.html','name','height=200,width=150');
 			$("#body").html("<div id='mynewdiv'>hi</div>");

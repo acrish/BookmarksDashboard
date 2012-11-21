@@ -108,6 +108,7 @@ function addToStore() {
 	if (!stored) {
 		localStorage["noLinks"] = 0;
 	}
-	alert("No of links ==== " + localStorage["noLinks"]);
+	// --- Debugging.... 
+	//alert("No of links ==== " + localStorage["noLinks"]);
 }
 

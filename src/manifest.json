@@ -1,11 +1,17 @@
 {
   "name": "NTP prototyping extension",
   "version": "1.1",
-  "description": "extension to prototype new NTP designs",
+  "description": "Bookmarks Dashboard",
   "chrome_url_overrides" : {
     "newtab": "BookmarksDashboard.html"
   },
+  "browser_action": {
+    "default_icon": "images/lightbulb.png",
+    "default_popup": "addLinkPopup.html"
+  },
   "permissions": [
+	"tabs",
+	"webNavigation",
     "topSites",
     "chrome://favicon/"
   ],

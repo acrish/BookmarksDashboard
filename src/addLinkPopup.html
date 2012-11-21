@@ -3,29 +3,15 @@
 
 <head>
 	<title>Add Bookmark</title>
-	<script language="javascript" type="text/javascript">
-	function addBookmark(myform) {
-		if (myform.bookmarkName.value != "") {
-			//adaugaLink(); persistent
-			//grid.append(var);
-			
-			var div=document.createElement('div');
-			div.innerHTML="<a href='"+ myform.bookmarkName.value +"'> Link1 </a>";
-			
-			window.opener.document.body.appendChild(div);//('text1').value
-		}
-		myform.bookmarkName.value="" // reset value
-		//this.close() // poate fi aici sau in alta parte
-	}
-	function closePopup() {
-		this.close()
-	}
-	</script>
+	<link rel="stylesheet" href="addLinkPopup.css">
+	<script src="addLinkPopup.js"></script>
 </head>
 <body>
-	<form>
-		Link: <input type="text" name="bookmarkName" size=40><br>
-	<button type="button" onclick="addBookmark(this.form)">Add</button>
-	<button type="button" onclick="closePopup()">Done</button>
+	<form id="MyForm">
+		Title: <input id="tabTitle" type="text" size=15><br>
+		Link:  <input id="tabUrl" type="text" size=20><br>
+		Category: <input id="category" type="text" size=20><br>
+		<button type="button">Add</button>
+		<button type="button">Done</button>
 	</form>
 </body>

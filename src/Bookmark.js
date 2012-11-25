@@ -1,11 +1,11 @@
 /**
  * Defines the bookmark class.
- * @param width the width of the bookmark div
- * @param height the height of the bookmark div
+ * @param width the width of the wrapper div
+ * @param height the height of the wrapper div
  * @param margin the margin of the bookmark div
  * @returns the newly created bookmark object
  */
-function Bookmark(width, height, margin, id) {
+function Bookmark(width, height, margin, id) {	
 	// Variables
 	var pageLink = "";
 	
@@ -88,9 +88,7 @@ function Bookmark(width, height, margin, id) {
 		}
 		
 	});
-	//bookmarkOnClick);
 
-	
 	/**
 	 * @return the div for this bookmark
 	 */

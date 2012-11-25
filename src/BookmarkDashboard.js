@@ -15,7 +15,6 @@ function getElement(id) {
  * @param bookmarksWindowId the id of the div that contains the bookmarks
  * @param numOfRows the number of rows
  * @param numOfColumns the number of columns
- * @return a vector with all bookmarks divs
  */
 function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	var bookmarksWindow = getElement(bookmarksWindowId);
@@ -26,52 +25,31 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	var divWidth = Math.floor(bookmarksWindowWidth / numOfColumns);
 	var divHeight = Math.floor(bookmarksWindowHeight / numOfRows);
 
-	var bookmarks = new Array(numOfRows);
+	var bookmarkWrappers = new Array(numOfRows);
 	for (var i = 0; i < numOfRows; i++) {
-		bookmarks[i] = new Array(numOfColumns);
+		bookmarkWrappers[i] = new Array(numOfColumns);
 		var divRow = document.createElement("div");
 		for (var j = 0; j < numOfColumns; j++) {
-			bookmarks[i][j] = new Bookmark(divWidth, divHeight, divMargin, i * numOfColumns + j);
-			
-			// Wrap the div so that dropping occurs in a specific area
-			var divWrapper = document.createElement("div");
-			divWrapper.id = "wrapper" + (i * numOfColumns + j);
-			divWrapper.style.width = divWidth + "px";
-			divWrapper.style.height = divHeight + "px";
-			divWrapper.style.background = "grey";
-			divWrapper.style.float = "left";
-			divWrapper.appendChild(bookmarks[i][j].getDiv());
-			
-			// Drag and drop event handler
-			divWrapper.ondrop = function(event) {
-				// Exchange div from source wrapper with div from destination wrapper
-				event.preventDefault();
-				var data = event.dataTransfer.getData("Text");
-				var dstDiv = event.target;
-				var srcDiv = document.getElementById(data);
-				var srcWrapper = srcDiv.parentNode;
-				var dstWrapper = dstDiv.parentNode;
-				dstWrapper.removeChild(dstDiv);
-				dstWrapper.appendChild(srcDiv);
-				srcWrapper.appendChild(dstDiv);
-			};
-			divWrapper.ondragover = function(event) {
-				event.preventDefault();
-			};
-			
-			divRow.appendChild(divWrapper);
+			// Create a wrapper with a bookmark inside.
+			bookmarkWrappers[i][j] = new Wrapper(divWidth, divHeight, divMargin, i * numOfColumns + j);
+			divRow.appendChild(bookmarkWrappers[i][j].wrapper);
 		}
 		bookmarksWindow.appendChild(divRow);
 	}
 	
-	return bookmarks;
+	// Make wrappers resizable.
+	for (var i = 0; i < numOfRows; i++) {
+		for (var j = 0; j < numOfRows; j++) {
+			$("#" + bookmarkWrappers[i][j].wrapper.id).resizable({ ghost: true, grid: [50, 50] });
+		}
+	}
 }
 
 /**
  * Executes function on page loading.
  */
-window.onload = function() {
-	var bookmarks = createBookmarksDivs('bookmarksDiv', NUM_OF_ROWS, NUM_OF_COLUMNS);
+window.onload = function() {	
+	createBookmarksDivs('bookmarksDiv', NUM_OF_ROWS, NUM_OF_COLUMNS);
 	var res = supports_html5_storage();
 	if (!res)
 		alert("I don't support html5 storage! Please update your browser version.");

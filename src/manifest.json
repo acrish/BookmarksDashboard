@@ -12,8 +12,7 @@
   "permissions": [
 	"tabs",
 	"webNavigation",
-    "topSites",
-    "chrome://favicon/"
+    "topSites"
   ],
   "manifest_version": 2
 }

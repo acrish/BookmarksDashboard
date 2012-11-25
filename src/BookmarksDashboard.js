@@ -35,26 +35,28 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 
 	// Create wrappers and bookmarks.
 	var bookmarkWrappers = new Array();
-	for (var i = 0; i < numOfRows; i++) {
-		var divRow = document.createElement("div");
-		for (var j = 0; j < numOfColumns; j++) {
-			// Create a wrapper with a bookmark inside.
-			var wrapper = new Wrapper(divWidth, divHeight, i * numOfColumns + j);
-			bookmarkWrappers[wrapper.getWrapper().id] = wrapper;
-			divRow.appendChild(bookmarkWrappers[wrapper.getWrapper().id].getWrapper());
-		}
-		bookmarksWindow.appendChild(divRow);
+	for (var i = 0; i < numOfRows * numOfColumns; i++) {
+		// Create a wrapper with a bookmark inside.
+		var wrapper = new Wrapper(divWidth, divHeight, i, bookmarkWrappers);
+		bookmarkWrappers[wrapper.getId()] = wrapper;
+		bookmarksWindow.appendChild(wrapper.getDiv());
 	}
 	
 	// Make wrappers resizable.
-	var gridWidth = divWidth / 2;
-	var gridHeight = divHeight / 2;
+	var minWidth = divWidth / 2; // Same with grid width.
+	var minHeight = divHeight / 2; // Same with grid height.
+	var maxWidth = divWidth * 2;
+	var maxHeight = divHeight;
 	for (var wrapper in bookmarkWrappers) {
 		$("#" + wrapper).resizable({
 			ghost: true,
-			grid: [gridWidth, gridHeight],
+			grid: [minWidth, minHeight],
+			minWidth: minWidth,
+			minHeight: minHeight,
+			maxWidth: maxWidth,
+			maxHeight: maxHeight,
 			stop: function(event, ui) {
-				bookmarkWrappers[ui.originalElement[0].id].resizeBookmark($(event.target).width(), 
+				bookmarkWrappers[ui.originalElement[0].id].resizeBookmark($(event.target).width(),
 						$(event.target).height());
 			}
 		});

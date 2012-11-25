@@ -2,16 +2,16 @@
  * Defines the bookmark wrapper class.
  * @param width the width of the wrapper div
  * @param height the height of the wrapper div
+ * @param an array with all bookmark wrappers
  * @returns the newly created wrapper object with a bookmark inside.
  */
-function Wrapper(width, height, id) {
+function Wrapper(width, height, id, bookmarkWrappers) {
 	// Wrap the div so that dropping occurs in a specific area
 	var divWrapper = document.createElement("div");
 	divWrapper.id = "wrapper" + id;
 	divWrapper.style.width = width + "px";
 	divWrapper.style.height = height + "px";
-	divWrapper.style.background = "#fff";
-	divWrapper.style.float = "left";
+	divWrapper.className = "WrapperDiv";
 	
 	// Drag and drop event handler
 	divWrapper.ondrop = function(event) {
@@ -23,8 +23,9 @@ function Wrapper(width, height, id) {
 		var srcWrapper = srcDiv.parentNode;
 		var dstWrapper = dstDiv.parentNode;
 		dstWrapper.removeChild(dstDiv);
-		dstWrapper.appendChild(srcDiv);
-		srcWrapper.appendChild(dstDiv);
+		
+		bookmarkWrappers[srcWrapper.id].setBookmarkDiv(dstDiv);
+		bookmarkWrappers[dstWrapper.id].setBookmarkDiv(srcDiv);
 	};
 	divWrapper.ondragover = function(event) {
 		event.preventDefault();
@@ -35,9 +36,23 @@ function Wrapper(width, height, id) {
 	divWrapper.appendChild(bookmark.getDiv());
 	
 	/**
+	 * @return the inner bookmark
+	 */
+	this.getBookmark = function() {
+		return bookmark;
+	};
+	
+	/**
+	 * @return the wrapper id
+	 */
+	this.getId = function() {
+		return divWrapper.id;
+	};
+	
+	/**
 	 * @return the wrapper div
 	 */
-	this.getWrapper = function() {
+	this.getDiv = function() {
 		return divWrapper;
 	};
 	
@@ -46,5 +61,14 @@ function Wrapper(width, height, id) {
 	 */
 	this.resizeBookmark = function(width, height) {
 		bookmark.setDimensions(width, height);
+	};
+	
+	/**
+	 * @param newDiv the new bookmark div
+	 */
+	this.setBookmarkDiv = function(newDiv) {
+		divWrapper.appendChild(newDiv);
+		this.getBookmark().setDiv(newDiv);
+		this.resizeBookmark($(divWrapper).width(), $(divWrapper).height());
 	};
 }

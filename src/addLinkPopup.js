@@ -21,14 +21,13 @@ function addBookmark() {
 	var name = "tab" + noLinks;
 	
 	var thingy = {};
-		thingy.link = url;
-		thingy.title = descr;
-		thingy.categ = category;
-		thingy.image = "";
+	thingy.link = url;
+	thingy.title = descr;
+	thingy.categ = category;
+	thingy.image = "";
 	localStorage[name] = JSON.stringify(thingy);
 	noLinks++;
 	localStorage["noLinks"] = noLinks;
-
 	window.close();
 }
 
@@ -37,7 +36,7 @@ function closePopup() {
 }
 document.addEventListener('DOMContentLoaded', function() {
 	var divs = document.querySelectorAll('button');
-	for ( var i = 0; i < divs.length; i++) {
+	for (var i = 0; i < divs.length; i++) {
 		divs[i].addEventListener('click', addBookmark);
 	}
 });

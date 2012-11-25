@@ -66,7 +66,7 @@ window.onload = function() {
 	removeAllImage.onclick=function() {
 		if (confirm("Do you really want to remove all your bookmarks?")) {
 			localStorage.clear();
-			window.reload();
+			window.location.reload();
 		}
 	};
 	removeAllImage.alt="Remove All";

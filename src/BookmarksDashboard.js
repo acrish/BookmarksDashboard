@@ -11,9 +11,11 @@ window.onload = function() {
 	//testPersistence();
 	
 	var removeAllImage = document.getElementById("removeAllImage");
-	removeAllImage.onclick = function() {
-		localStorage.clear();
-		window.reload();
+	removeAllImage.onclick=function() {
+		if (confirm("Do you really want to remove all your bookmarks?")) {
+			localStorage.clear();
+			window.location.reload();
+		}
 	};
 	removeAllImage.alt="Remove All";
 	

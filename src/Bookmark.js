@@ -104,7 +104,7 @@ function Bookmark(width, height, id) {
  */
 function createBookmarkDiv(width, height, id) {
 	var bookmarkDiv = document.createElement("div");
-	bookmarkDiv.id = "div" + id;
+	bookmarkDiv.id = BkIdGenerator.getId(id);
 	
 	// Div style.
 	$(bookmarkDiv).width(width - 2 * BOOKMARK_MARGIN);

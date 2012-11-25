@@ -1,3 +1,17 @@
+function updateImage(id, url) {
+	var noLinks = parseInt(localStorage["noLinks"]);
+	if (noLinks && id < noLinks) {
+		var name = "tab" + id;
+		var info = localStorage[name];
+		
+		if (info) {
+			var obj = JSON.parse(info);
+			obj.image = url;
+			localStorage[name] = JSON.stringify(obj);
+		}
+	}
+}
+
 /**
  * Defines the bookmark class.
  * @param width the width of the wrapper div
@@ -8,6 +22,8 @@
 function Bookmark(width, height, margin, id) {	
 	// Variables
 	var pageLink = "";
+	var image = "";
+	var category = "";
 	
 	// Create bookmark div.
 	var bookmarkDiv = createBookmarkDiv(width, height, margin, id);
@@ -41,6 +57,7 @@ function Bookmark(width, height, margin, id) {
 		var url = window.prompt("Enter image url:", "http://");
 		if (url != null && url != "") {
 			bookmarkDiv.style.backgroundImage = "url('" + url + "')";
+			updateImage(id, url);
 		}
 	});
 	hoverButtonsDiv.appendChild(imageButton);
@@ -57,22 +74,26 @@ function Bookmark(width, height, margin, id) {
 	hoverButtonsDiv.appendChild(categoryButton);
 	
 	// Load bookmarks links;
+	//localStorage.clear();
 	var noLinks = parseInt(localStorage["noLinks"]);
 	if (noLinks && id < noLinks) {
+		//alert("intra");
 		var name = "tab" + id;
-		var url = localStorage[name];
-		if (url) {
+		var info = localStorage[name];
+		if (info) {
+			var obj = JSON.parse(info);
 			var bookmarkP = document.createElement("p");
 			bookmarkP.style.marginTop = "40px";
 			var bookmarkTxt = document.createElement("a");
 			bookmarkTxt.style.display="block";
 			bookmarkTxt.style.height="100%";
 			bookmarkTxt.style.width="100%";
-			bookmarkTxt.innerHTML = "Bookmark: " + (id + 1);
-			bookmarkTxt.href = url;
+			bookmarkTxt.innerHTML = obj.title;
+			bookmarkTxt.href = obj.link;
 			bookmarkP.appendChild(bookmarkTxt);
 			bookmarkDiv.appendChild(bookmarkP);
-			pageLink = url;
+			bookmarkDiv.style.backgroundImage = "url('" + obj.image + "')";
+			pageLink = obj.link;
 		}
 	}
 	bookmarkDiv.addEventListener("click", function() {

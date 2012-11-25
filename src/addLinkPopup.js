@@ -6,10 +6,12 @@ function getLink() {
 		document.getElementById("tabTitle").value = tab.title;
 	});
 }
+
 function addBookmark() {
 	// Adding bookmark
 	var url = document.getElementById("tabUrl").value;
 	var category = document.getElementById("category").value;
+	var descr = document.getElementById("tabTitle").value;
 	if (category == "")
 		category = "Default";
 
@@ -17,8 +19,13 @@ function addBookmark() {
 	if (!noLinks)
 		localStorage["noLinks"] = 0;
 	var name = "tab" + noLinks;
-	localStorage[name] = url;
-
+	
+	var thingy = {};
+		thingy.link = url;
+		thingy.title = descr;
+		thingy.categ = category;
+		thingy.image = "";
+	localStorage[name] = JSON.stringify(thingy);
 	noLinks++;
 	localStorage["noLinks"] = noLinks;
 

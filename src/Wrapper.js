@@ -2,16 +2,15 @@
  * Defines the bookmark wrapper class.
  * @param width the width of the wrapper div
  * @param height the height of the wrapper div
- * @param margin the margin of the bookmark div
  * @returns the newly created wrapper object with a bookmark inside.
  */
-function Wrapper(width, height, margin, id) {
+function Wrapper(width, height, id) {
 	// Wrap the div so that dropping occurs in a specific area
 	var divWrapper = document.createElement("div");
 	divWrapper.id = "wrapper" + id;
 	divWrapper.style.width = width + "px";
 	divWrapper.style.height = height + "px";
-	divWrapper.style.background = "silver";
+	divWrapper.style.background = "#fff";
 	divWrapper.style.float = "left";
 	
 	// Drag and drop event handler
@@ -31,14 +30,21 @@ function Wrapper(width, height, margin, id) {
 		event.preventDefault();
 	};
 	
-	var bookmark = new Bookmark(width, height, margin, id);
+	// Creates the bookmark.
+	var bookmark = new Bookmark(width, height, id);
 	divWrapper.appendChild(bookmark.getDiv());
-	this.getBookmark = function() {
-		return bookmark;
+	
+	/**
+	 * @return the wrapper div
+	 */
+	this.getWrapper = function() {
+		return divWrapper;
 	};
 	
-	this.wrapper = divWrapper;
-	this.getWrapper = function() {
-		return wrapper;
+	/**
+	 * Resizes the inner bookmark to the wrapper size.
+	 */
+	this.resizeBookmark = function(width, height) {
+		bookmark.setDimensions(width, height);
 	};
 }

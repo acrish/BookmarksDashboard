@@ -16,16 +16,6 @@ function getElement(id) {
  * @param numOfColumns the number of columns
  */
 function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
-	var settingsMenu = document.getElementById("settingsMenu");
-	var button = document.createElement("input");
-	button.type="button";
-	button.onclick=function() {
-		localStorage.clear();
-	};
-	button.value="RemoveAll";
-	settingsMenu.appendChild(button);
-	
-	
 	var bookmarksWindow = getElement(bookmarksWindowId);
 	var bookmarksWindowWidth = parseInt(bookmarksWindow.style.width);
 	var bookmarksWindowHeight = parseInt(bookmarksWindow.style.height);

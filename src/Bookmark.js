@@ -1,3 +1,5 @@
+var BOOKMARK_MARGIN = 10; 
+
 function updateImage(id, url) {
 	var noLinks = parseInt(localStorage["noLinks"]);
 	if (noLinks && id < noLinks) {
@@ -16,17 +18,20 @@ function updateImage(id, url) {
  * Defines the bookmark class.
  * @param width the width of the wrapper div
  * @param height the height of the wrapper div
- * @param margin the margin of the bookmark div
  * @returns the newly created bookmark object
  */
-function Bookmark(width, height, margin, id) {	
+function Bookmark(width, height, id) {	
+	var margin = BOOKMARK_MARGIN;
 	// Variables
 	var pageLink = "";
 	var image = "";
 	var category = "";
 	
 	// Create bookmark div.
-	var bookmarkDiv = createBookmarkDiv(width, height, margin, id);
+	var bookmarkDiv = createBookmarkDiv(id);
+	$(bookmarkDiv).width(width - 2 * margin);
+	$(bookmarkDiv).height(height - 2 * margin);
+	bookmarkDiv.style.margin = margin + "px";
 	
 	// Create hover div.
 	var hoverButtonsDiv = document.createElement("div");
@@ -42,7 +47,8 @@ function Bookmark(width, height, margin, id) {
 		hoverButtonsDiv.style.display = "none";
 	};
 	
-	var onHoverButtonClick = false; // TODO(cmihail): workaround for div/button click bug
+	// Workaround for div/button click bug.
+	var onHoverButtonClick = false; 
 	
 	// Add change bookmark button.
 	var bookmarkButton = createBookmarkHoverButton("Bookmark", function() {
@@ -116,25 +122,30 @@ function Bookmark(width, height, margin, id) {
 	this.getDiv = function() {
 		return bookmarkDiv;
 	};
+	
+
+	/**
+	 * Sets the div dimensions.
+	 */
+	this.setDimensions = function(newWidth, newHeight) {
+		$(bookmarkDiv).width(newWidth - 2 * margin);
+		$(bookmarkDiv).height(newHeight - 2 * margin);
+		bookmarkDiv.style.margin = margin + "px";
+	};
 }
 
 /**
  * Creates the bookmark div.
- * @param width the width of the bookmark div
- * @param height the height of the bookmark div
- * @param margin the margin of the bookmark div
+ * @param id the id of the bookmark div
  * @returns the newly created bookmark object
  */
-function createBookmarkDiv(width, height, margin, id) {
+function createBookmarkDiv(id) {
 	var bookmarkDiv = document.createElement("div");
-	bookmarkDiv.id = "div"+id;
+	bookmarkDiv.id = "div" + id;
 	bookmarkDiv.className = "defaultCategory";
 	
 	// Div style.
-	bookmarkDiv.style.width = (width - 2 * margin) + "px";
-	bookmarkDiv.style.height = (height - 2 * margin) + "px";
-	bookmarkDiv.style.margin = margin + "px";
-	bookmarkDiv.style.background = "white";
+	bookmarkDiv.style.background = "grey";
 	bookmarkDiv.style.float = "left";
 	bookmarkDiv.style.position = "relative";
 	bookmarkDiv.opacity = 1;

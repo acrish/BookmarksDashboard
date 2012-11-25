@@ -15,19 +15,14 @@ function addBookmark() {
 	if (category == "")
 		category = "Default";
 
-	var noLinks = localStorage["noLinks"];
-	if (!noLinks)
-		localStorage["noLinks"] = 0;
-	var name = "tab" + noLinks;
-	
+	var name = BkIdGenerator.getNextId();
 	var thingy = {};
 	thingy.link = url;
 	thingy.title = descr;
 	thingy.categ = category;
 	thingy.image = "";
 	localStorage[name] = JSON.stringify(thingy);
-	noLinks++;
-	localStorage["noLinks"] = noLinks;
+
 	window.close();
 }
 
@@ -35,9 +30,10 @@ function closePopup() {
 	window.close();
 }
 document.addEventListener('DOMContentLoaded', function() {
-	var divs = document.querySelectorAll('button');
-	for (var i = 0; i < divs.length; i++) {
-		divs[i].addEventListener('click', addBookmark);
+	var bts = document.querySelectorAll('button');
+	if (bts.length == 2) {
+		bts[0].addEventListener('click', addBookmark);
+		bts[1].addEventListener('click', closePopup);
 	}
 });
 getLink();

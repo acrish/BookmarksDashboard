@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+	<title>Settings</title>
+	<link rel="stylesheet" href="editSingleBookmark.css">
+	<script src="editSingleBookmark.js"></script>
+</head>
+<body onload="populateForm()">
+	<form id="MyForm">
+		Title: <input id="tabTitle" class="alignClass" type="text" size=25><br/><br/>
+		Link:  <input id="tabUrl" class="alignClass" type="text" disabled size=25><br><br>
+	</form>
+	
+	Category
+	
+	<select id="category" class="alignClass" width=25>
+	  <option value="default">Default</option>
+	  <option value="fun">Fun</option>
+	  <option value="social">Social</option>
+	</select> <br><br>
+	
+	<form id="MyForm">	
+		Image: <input id="imgURL" class="alignClass" type="text" size=25> <br><br>
+		Height: <label for="height" class="alignClass">0px</label> <br><br>
+		Width: <label for="width" class="alignClass">0px</label><br><br>
+		Show: <input id="hidden" class="alignClass" type="checkbox"><br><br>
+		<button type="button" onclick="save()">Save</button>
+		<button type="button" onclick="closePopup()">Close</button>
+	</form>
+</body>

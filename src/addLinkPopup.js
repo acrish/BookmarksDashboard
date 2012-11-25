@@ -15,20 +15,15 @@ function addBookmark() {
 	if (category == "")
 		category = "Default";
 
-	var noLinks = localStorage["noLinks"];
-	if (!noLinks)
-		localStorage["noLinks"] = 0;
-	var name = "tab" + noLinks;
-	
+	var name = BkIdGenerator.getNextId();
+//	alert(name);
 	var thingy = {};
 		thingy.link = url;
 		thingy.title = descr;
 		thingy.categ = category;
 		thingy.image = "";
 	localStorage[name] = JSON.stringify(thingy);
-	noLinks++;
-	localStorage["noLinks"] = noLinks;
-
+//	alert(localStorage[name]);
 	window.close();
 }
 

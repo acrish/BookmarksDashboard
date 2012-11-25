@@ -17,15 +17,6 @@ function getElement(id) {
  * @param numOfColumns the number of columns
  */
 function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
-	var removeAllImage = document.getElementById("removeAllImage");
-	removeAllImage.onclick=function() {
-		localStorage.clear();
-		window.reload();
-	};
-	removeAllImage.alt="Remove All";
-	settingsMenu.appendChild(removeAllImage);
-	
-	
 	var bookmarksWindow = getElement(bookmarksWindowId);
 	var bookmarksWindowWidth = parseInt(bookmarksWindow.style.width);
 	var bookmarksWindowHeight = parseInt(bookmarksWindow.style.height);
@@ -57,13 +48,22 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 /**
  * Executes function on page loading.
  */
-window.onload = function() {	
-	createBookmarksDivs('bookmarksDiv', NUM_OF_ROWS, NUM_OF_COLUMNS);
+window.onload = function() {
+//	localStorage.clear();
 	var res = supports_html5_storage();
 	if (!res)
 		alert("I don't support html5 storage! Please update your browser version.");
 	//testPersistence();
-	addToStore();
+	
+	var removeAllImage = document.getElementById("removeAllImage");
+	removeAllImage.onclick=function() {
+		localStorage.clear();
+		window.reload();
+	};
+	removeAllImage.alt="Remove All";
+	
+	createBookmarksDivs('bookmarksDiv', NUM_OF_ROWS, NUM_OF_COLUMNS);
+	//addToStore();
 };
 
 /**
@@ -79,13 +79,13 @@ function supports_html5_storage() {
 
 // Test persistence:
 function testPersistence() {
-	var stored = localStorage["noLinks"];
-	
+	var stored = localStorage["last_thumbnail"];
+
 	if (!stored) {
-		localStorage["noLinks"] = 0;
+		localStorage["last_thumbnail"] = "works!";
+		alert("Now added sth to local storage");
 	}
-	alert("No of links = " + localStorage["noLinks"]);
-	//alert("Last printed is " + localStorage["last_thumbnail"]);
+	alert("Last printed is " + localStorage["last_thumbnail"]);
 
 }
 

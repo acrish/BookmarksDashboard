@@ -74,28 +74,23 @@ function Bookmark(width, height, margin, id) {
 	hoverButtonsDiv.appendChild(categoryButton);
 	
 	// Load bookmarks links;
-	//localStorage.clear();
-	var noLinks = parseInt(localStorage["noLinks"]);
-	if (noLinks && id < noLinks) {
-		//alert("intra");
-		var name = "tab" + id;
-		var info = localStorage[name];
-		if (info) {
-			var obj = JSON.parse(info);
-			var bookmarkP = document.createElement("p");
-			bookmarkP.style.marginTop = "40px";
-			var bookmarkTxt = document.createElement("a");
-			bookmarkTxt.style.display="block";
-			bookmarkTxt.style.height="100%";
-			bookmarkTxt.style.width="100%";
-			bookmarkTxt.innerHTML = obj.title;
-			bookmarkTxt.href = obj.link;
-			bookmarkP.appendChild(bookmarkTxt);
-			bookmarkDiv.appendChild(bookmarkP);
-			bookmarkDiv.style.backgroundImage = "url('" + obj.image + "')";
-			pageLink = obj.link;
-		}
+	var info = localStorage[BkIdGenerator.getId(id)];
+	if (info) {
+		var obj = JSON.parse(info);
+		var bookmarkP = document.createElement("p");
+		bookmarkP.style.marginTop = "40px";
+		var bookmarkTxt = document.createElement("a");
+		bookmarkTxt.style.display="block";
+		bookmarkTxt.style.height="100%";
+		bookmarkTxt.style.width="100%";
+		bookmarkTxt.innerHTML = obj.title;
+		bookmarkTxt.href = obj.link;
+		bookmarkP.appendChild(bookmarkTxt);
+		bookmarkDiv.appendChild(bookmarkP);
+		bookmarkDiv.style.backgroundImage = "url('" + obj.image + "')";
+		pageLink = obj.link;
 	}
+	
 	bookmarkDiv.addEventListener("click", function() {
 		if (!onHoverButtonClick) {
 			if (pageLink == "") {

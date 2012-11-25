@@ -17,14 +17,13 @@ function getElement(id) {
  * @param numOfColumns the number of columns
  */
 function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
-	var settingsMenu = document.getElementById("settingsMenu");
-	var button = document.createElement("input");
-	button.type="button";
-	button.onclick=function() {
+	var removeAllImage = document.getElementById("removeAllImage");
+	removeAllImage.onclick=function() {
 		localStorage.clear();
+		window.reload();
 	};
-	button.value="RemoveAll";
-	settingsMenu.appendChild(button);
+	removeAllImage.alt="Remove All";
+	settingsMenu.appendChild(removeAllImage);
 	
 	
 	var bookmarksWindow = getElement(bookmarksWindowId);

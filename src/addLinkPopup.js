@@ -31,9 +31,10 @@ function closePopup() {
 	window.close();
 }
 document.addEventListener('DOMContentLoaded', function() {
-	var divs = document.querySelectorAll('button');
-	for ( var i = 0; i < divs.length; i++) {
-		divs[i].addEventListener('click', addBookmark);
+	var bts = document.querySelectorAll('button');
+	if (bts.length == 2) {
+		bts[0].addEventListener('click', addBookmark);
+		bts[1].addEventListener('click', closePopup);
 	}
 });
 getLink();

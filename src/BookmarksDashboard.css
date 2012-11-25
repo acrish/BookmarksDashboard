@@ -27,9 +27,9 @@ body {
 
 .BookmarkDiv {
 	background: grey;
- 	float: left;
 	position: relative;
 	background-size: 100% 100%;
+	float: left;
 }
 
 .WrapperDiv {
@@ -37,19 +37,29 @@ body {
 	float: left;
 }
 
-div[*class='Category'] {
-	border: 1px solid;
-	border-bottom: 5px solid orange;
-}
-
 .defaultCategory {
-	border-bottom: 5px solid orange;
+	border-radius: 10px;
+	box-shadow: 10px 10px 5px orange;
 }
 
 .funCategory {
-	border-bottom: 5px solid purple;
+	border-radius: 10px;
+	box-shadow: 10px 10px 5px purple;
 }
 
 .socialCategory {
-	border-bottom: 5px solid blue;
+	border-radius: 10px;
+	box-shadow: 10px 10px 5px blue;
+}
+
+#hintMessage {
+	font-size: 30px;
+	position: absolute;
+	right: 50px;
+	top: 0;
+	vertical-align: middle;
+}
+
+.hintImage {
+	vertical-align: middle;
 }

@@ -6,7 +6,6 @@ function BkIdGenerator() {
 	
 }
 
-
 BkIdGenerator.idTemplate = 'bookmark';
 
 BkIdGenerator.getNextId = function() {

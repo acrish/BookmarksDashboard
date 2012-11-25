@@ -37,20 +37,20 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	var minHeight = divHeight / 2; // Same with grid height.
 	var maxWidth = divWidth * 2;
 	var maxHeight = divHeight;
-//	for (var wrapper in bookmarkWrappers) {
-//		$("#" + wrapper).resizable({
-//			ghost: true,
-//			grid: [minWidth, minHeight],
-//			minWidth: minWidth,
-//			minHeight: minHeight,
-//			maxWidth: maxWidth,
-//			maxHeight: maxHeight,
-//			stop: function(event, ui) {
-//				bookmarkWrappers[ui.originalElement[0].id].resizeBookmark($(event.target).width(),
-//						$(event.target).height());
-//			}
-//		});
-//	}
+	for (var wrapper in bookmarkWrappers) {
+		$("#" + wrapper).resizable({
+			ghost: true,
+			grid: [minWidth, minHeight],
+			minWidth: minWidth,
+			minHeight: minHeight,
+			maxWidth: maxWidth,
+			maxHeight: maxHeight,
+			stop: function(event, ui) {
+				bookmarkWrappers[ui.originalElement[0].id].resizeBookmark($(event.target).width(),
+						$(event.target).height());
+			}
+		});
+	}
 }
 
 /**

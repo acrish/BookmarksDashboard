@@ -189,6 +189,15 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 	});
 	hoverButtonsDiv.appendChild(removeButton);
 	
+	// Add settings button.
+	var settingsIcon= createBookmarkHoverImage("images/setting.png", "Settings", function() {
+		onHoverButtonClick = true;
+		// Load settings dialog 
+		window.open("editSingleBookmark.html");
+		//TODO make the settings persistent
+	});
+	hoverButtonsDiv.appendChild(settingsIcon);
+	
 	return hoverButtonsDiv;
 }
 
@@ -210,7 +219,8 @@ function createBookmarkHoverImage(src, text, onclickFunction) {
 	hoverImage.onmouseout = function() {
 		this.style.border = "0";
 	};
-	
+	hoverImage.title = text;
+
 	
 	return hoverImage;
 }

@@ -19,6 +19,7 @@ window.onload = function() {
 		}
 	};
 	removeAllImage.alt="Remove All";
+	removeAllImage.title="Remove All Bookmarks";
 	removeAllImage.className = "hoverImage";
 	removeAllImage.style.marginLeft = "15px";
 	

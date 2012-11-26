@@ -24,7 +24,6 @@ function Wrapper(width, height, id, bookmarkWrappers) {
 		var dstWrapper = dstDiv.parentNode;
 		var aux;
 		dstWrapper.removeChild(dstDiv);
-		alert(srcDiv.id + "; " + dstDiv.id);
 
 		// Persist (bkId, json_info) interchanged. If there won't be empty bookmarks in the 
 		// dashboard, keep only the body of last if.
@@ -46,7 +45,6 @@ function Wrapper(width, height, id, bookmarkWrappers) {
 		aux = dstDiv.id;
 		dstDiv.id = srcDiv.id;
 		srcDiv.id = aux;
-		alert(srcDiv.id + "; " + dstDiv.id);
 		bookmarkWrappers[srcWrapper.id].setBookmarkDiv(dstDiv);
 		bookmarkWrappers[dstWrapper.id].setBookmarkDiv(srcDiv);
 	};

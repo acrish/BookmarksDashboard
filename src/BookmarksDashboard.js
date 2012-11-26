@@ -61,15 +61,15 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	// Id starts from current_page * numOfRows * numOfColumns 
 	var page = parseInt(localStorage["page"]);
 	var id = page * numOfRows * numOfColumns;
-	
-	var limit = numOfRows * numOfColumns;
+	var limit = (page+1) * numOfRows * numOfColumns;
 	for (; localStorage[BkIdGenerator.getId(id)] != null && id < limit; id++) {
+		//alert("intra");
 		var wrapper = new Wrapper(divWidth, divHeight, id,
 				{'isMockup': false, 'localStorageId': BkIdGenerator.getId(id), 'wrappers': bookmarkWrappers});
 		bookmarkWrappers[wrapper.getId()] = wrapper;
 		bookmarksWindow.appendChild(wrapper.getDiv());
 	}
-	
+	//alert("after");
 	// Make wrappers resizable.
 	if (id > 0) {
 		var minWidth = divWidth / 2 - WRAPPER_MARGIN;
@@ -94,10 +94,12 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 		}
 		
 		// Create mockup bookmarks.
-		for (; id < limit; id++) {
-			var wrapper = new Wrapper(divWidth, divHeight, id, {'isMockup': true});
-			bookmarkWrappers[wrapper.getId()] = wrapper;
-			bookmarksWindow.appendChild(wrapper.getDiv());
+		if (page == 0) {
+			for (; id < limit; id++) {
+				var wrapper = new Wrapper(divWidth, divHeight, id, {'isMockup': true});
+				bookmarkWrappers[wrapper.getId()] = wrapper;
+				bookmarksWindow.appendChild(wrapper.getDiv());
+			}
 		}
 	} else { // Hint message.
 		printHintMessage(bookmarksWindow);
@@ -162,6 +164,7 @@ function next() {
 	if (noLinks == 0 || page + 1 == maxPages)
 		return;
 	page ++;
+	localStorage["page"] = page;
 	window.location.reload();
 }
 
@@ -169,9 +172,10 @@ function prev() {
 	// The variable is stored on load
 	var page = parseInt(localStorage["page"]);
 	var noLinks = BkIdGenerator.getSuffix(BkIdGenerator.getNextId());
-	
+	//alert(page);
 	if (page == 0)
 		return;
 	page --;
 	localStorage["page"] = page;
+	window.location.reload();
 }

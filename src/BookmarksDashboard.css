@@ -26,6 +26,10 @@ body {
 	float: left;
 	margin-left: 10px;
 	margin-bottom: 5%;
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 42613b1... Revert "next & prev buttons visible on hover"
 }
 
 #settingsMenu {
@@ -38,10 +42,13 @@ body {
 	border-bottom-left-radius: 15px;
 }
 
+<<<<<<< HEAD
 .page-switcher:hover {
 	opacity: 1.0;
 }
 
+=======
+>>>>>>> 42613b1... Revert "next & prev buttons visible on hover"
 .page-switcher {
 	font-size: 50px;
 	position: fixed;
@@ -50,8 +57,12 @@ body {
 	width: 5%;
 	height: 85%;
 	color: #505050;
+<<<<<<< HEAD
 	opacity: 0.0;
 	background-color: transparent;
+=======
+	background-color:transparent;
+>>>>>>> 42613b1... Revert "next & prev buttons visible on hover"
 }
 
 .hoverImage {

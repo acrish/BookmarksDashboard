@@ -14,7 +14,6 @@ function addBookmark() {
 	var descr = document.getElementById("tabTitle").value;
 	if (category == "")
 		category = "Default";
-
 	
 	var name = BkIdGenerator.getNextId();
 	var thingy = {};

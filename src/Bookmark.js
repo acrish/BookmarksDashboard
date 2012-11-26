@@ -24,9 +24,12 @@ function Bookmark(width, height, id, options) {
 		if (info == null) {
 			alert("There was an internal problem");
 		}
+		
+		// Hover buttons.
 		hoverButtonsDiv = createHoverDivAndIcons(bookmarkDiv, id);
 		bookmarkDiv.appendChild(hoverButtonsDiv);
 		
+		// Inside link.
 		var obj = JSON.parse(info);
 		bookmarkDiv.style.backgroundImage = "url('" + obj.image + "')";
 		pageLink = obj.link;
@@ -37,6 +40,11 @@ function Bookmark(width, height, id, options) {
 		bookmarkTxt.href = pageLink;
 		bookmarkParagraph.appendChild(bookmarkTxt);
 		
+		// Category.
+		var categoryCssClass = Categories.getCategoryClass(obj.categ);
+		bookmarkDiv.className = DEFAULT_CLASS_NAME + " " + categoryCssClass;
+		
+		// Open bookmark.
 		bookmarkDiv.addEventListener("click", function() {
 			if (!onHoverButtonClick) {
 				window.location = pageLink;
@@ -76,22 +84,6 @@ function Bookmark(width, height, id, options) {
 		$(bookmarkDiv).width(newWidth);
 		$(bookmarkDiv).height(newHeight);
 	};
-}
-
-/**
- * @param id
- * @param url
- */
-function updateImage(id, url) {
-	name = BkIdGenerator.getId(id);
-	
-	var info = localStorage[name];
-	
-	if (info) {
-		var obj = JSON.parse(info);
-		obj.image = url;
-		localStorage[name] = JSON.stringify(obj);
-	}
 }
 
 /**
@@ -162,6 +154,7 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 				'default');
 		var categoryCssClass = Categories.getCategoryClass(category);
 		bookmarkDiv.className = DEFAULT_CLASS_NAME + " " + categoryCssClass;
+		updateCategory(id, category);
 	});
 	hoverButtonsDiv.appendChild(categoryButton);
 	
@@ -208,6 +201,34 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 	hoverButtonsDiv.appendChild(settingsIcon);
 
 	return hoverButtonsDiv;
+}
+
+/**
+ * @param id
+ * @param url
+ */
+function updateImage(id, url) {
+	name = BkIdGenerator.getId(id);
+	var info = localStorage[name];
+	if (info) {
+		var obj = JSON.parse(info);
+		obj.image = url;
+		localStorage[name] = JSON.stringify(obj);
+	}
+}
+
+/**
+ * @param id
+ * @param category
+ */
+function updateCategory(id, category) {
+	name = BkIdGenerator.getId(id);
+	var info = localStorage[name];
+	if (info) {
+		var obj = JSON.parse(info);
+		obj.categ = category;
+		localStorage[name] = JSON.stringify(obj);
+	}
 }
 
 /**

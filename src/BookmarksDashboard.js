@@ -18,7 +18,6 @@ window.onload = function() {
 		page = parseInt(exists);
 	else
 		localStorage["page"] = 0;
-		
 
 	
 	var nextButton = document.getElementById("page-switcher-next");

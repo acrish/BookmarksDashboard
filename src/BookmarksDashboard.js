@@ -16,7 +16,9 @@ window.onload = function() {
 
 	if (exists)
 		page = parseInt(exists);
-
+	else
+		localStorage["page"] = 0;
+		
 	var removeAllImage = document.getElementById("removeAllImage");
 	removeAllImage.onclick=function() {
 		if (confirm("Do you really want to remove all your bookmarks?")) {
@@ -29,6 +31,11 @@ window.onload = function() {
 	removeAllImage.title="Remove All Bookmarks";
 	removeAllImage.className = "hoverImage";
 	removeAllImage.style.marginLeft = "15px";
+	
+	var nextButton = document.getElementById("page-switcher-next");
+	nextButton.onclick = next;
+	var prevButton = document.getElementById("page-switcher-prev");
+	prevButton.onclick = prev;
 	
 	createBookmarksDivs('bookmarksDiv', NUM_OF_ROWS, NUM_OF_COLUMNS);
 };
@@ -50,7 +57,11 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 
 	// Create wrappers and bookmarks.
 	var bookmarkWrappers = new Array();
-	var id = 0;
+	//var id = 0;
+	// Id starts from current_page * numOfRows * numOfColumns 
+	var page = parseInt(localStorage["page"]);
+	var id = page * numOfRows * numOfColumns;
+	
 	var limit = numOfRows * numOfColumns;
 	for (; localStorage[BkIdGenerator.getId(id)] != null && id < limit; id++) {
 		var wrapper = new Wrapper(divWidth, divHeight, id,
@@ -141,25 +152,26 @@ function addToStore() {
 
 function next() {
 	// The variable is stored on load
-	page = parseInt(localStorage["page"]);
-	var noLinks = BkIdGenerator.getSuffix(BkIdGenerator.getNextId);
-	var maxPages = noLinks / maximumLinks;
-	
+	var page = parseInt(localStorage["page"]);
+	var noLinks = BkIdGenerator.getSuffix(BkIdGenerator.getNextId());
+	var maximumLinks = NUM_OF_ROWS * NUM_OF_COLUMNS;
+	var maxPages = Math.floor(noLinks / maximumLinks);
+
 	if (noLinks % maximumLinks != 0)
 		maxPages++;
 	if (noLinks == 0 || page + 1 == maxPages)
 		return;
 	page ++;
+	window.location.reload();
 }
 
 function prev() {
 	// The variable is stored on load
-	page = parseInt(localStorage["page"]);
-	var noLinks = BkIdGenerator.getSuffix(BkIdGenerator.getNextId);
-	var maximumLinks = NUM_OF_ROWS * NUM_OF_COLUMNS;
-	var maxPages = noLinks / maximumLinks;
+	var page = parseInt(localStorage["page"]);
+	var noLinks = BkIdGenerator.getSuffix(BkIdGenerator.getNextId());
 	
 	if (page == 0)
 		return;
 	page --;
+	localStorage["page"] = page;
 }

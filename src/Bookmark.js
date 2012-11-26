@@ -2,16 +2,14 @@ var BOOKMARK_MARGIN = 0;
 var DEFAULT_CLASS_NAME = "BookmarkDiv";
 
 function updateImage(id, url) {
-	var noLinks = parseInt(localStorage["noLinks"]);
-	if (noLinks && id < noLinks) {
-		var name = "tab" + id;
-		var info = localStorage[name];
-		
-		if (info) {
-			var obj = JSON.parse(info);
-			obj.image = url;
-			localStorage[name] = JSON.stringify(obj);
-		}
+	name = BkIdGenerator.getId(id);
+	
+	var info = localStorage[name];
+	
+	if (info) {
+		var obj = JSON.parse(info);
+		obj.image = url;
+		localStorage[name] = JSON.stringify(obj);
 	}
 }
 
@@ -32,7 +30,7 @@ function Bookmark(width, height, id, options) {
 	var bookmarkDiv = createBookmarkDiv(width, height, id);
 	
 	// Create hover div and buttons.
-	var hoverButtonsDiv = createHoverDivAndIcons(bookmarkDiv);
+	var hoverButtonsDiv = createHoverDivAndIcons(bookmarkDiv, id);
 	bookmarkDiv.appendChild(hoverButtonsDiv);
 	
 	// Add content to bookmark div.
@@ -81,7 +79,7 @@ function Bookmark(width, height, id, options) {
 	this.setDiv = function(newDiv) {
 		bookmarkDiv.removeChild(hoverButtonsDiv);
 		bookmarkDiv = newDiv;
-		hoverButtonsDiv = createHoverDivAndIcons(bookmarkDiv);
+		hoverButtonsDiv = createHoverDivAndIcons(bookmarkDiv, id);
 		bookmarkDiv.appendChild(hoverButtonsDiv);
 	};
 
@@ -131,7 +129,7 @@ function createBookmarkDiv(width, height, id) {
  * @param bookmarkDiv the bookmark div
  * @returns the newly created hover div
  */
-function createHoverDivAndIcons(bookmarkDiv) {
+function createHoverDivAndIcons(bookmarkDiv, id) {
 	// Create hover div.
 	var hoverButtonsDiv = document.createElement("div");
 	hoverButtonsDiv.style.position = "absolute";

@@ -40,18 +40,18 @@ function Bookmark(width, height, id) {
 	var info = localStorage[BkIdGenerator.getId(id)];
 	if (info) {
 		var obj = JSON.parse(info);
-		var bookmarkP = document.createElement("p");
-		bookmarkP.style.marginTop = "40px";
-		var bookmarkTxt = document.createElement("a");
-		bookmarkTxt.style.display="block";
-		bookmarkTxt.style.height="100%";
-		bookmarkTxt.style.width="100%";
-		bookmarkTxt.innerHTML = obj.title;
-		bookmarkTxt.href = obj.link;
-		bookmarkP.appendChild(bookmarkTxt);
-		bookmarkDiv.appendChild(bookmarkP);
 		bookmarkDiv.style.backgroundImage = "url('" + obj.image + "')";
 		pageLink = obj.link;
+		
+		var bookmarkParagraph = document.createElement("p");
+		bookmarkParagraph.className = "bookmarkParagraph";
+		
+		var bookmarkTxt = document.createElement("a");
+		bookmarkTxt.innerHTML = obj.title;
+		bookmarkTxt.href = pageLink;
+		
+		bookmarkParagraph.appendChild(bookmarkTxt);
+		bookmarkDiv.appendChild(bookmarkParagraph);
 	}
 	
 	bookmarkDiv.addEventListener("click", function() {

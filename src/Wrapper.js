@@ -124,24 +124,19 @@ function dragAndDrop(divWrapper, bookmarkWrappers) {
 		var srcDiv = document.getElementById(data);
 		var srcWrapperDiv = srcDiv.parentNode;
 		var dstWrapperDiv = dstDiv.parentNode;
-		var aux;
+		
+		// Drag and drop shouldn't be used on divs that don't have bookmarks inside.
+		if (!localStorage[srcDiv.id] || !localStorage[dstDiv.id]) {
+			return;
+		}
+		
 		dstWrapperDiv.removeChild(dstDiv);
 
-		// Persist (bkId, json_info) interchanged. If there won't be empty bookmarks in the 
-		// dashboard, keep only the body of last if.
-		if (localStorage[srcDiv.id] && !localStorage[dstDiv.id]) {
-			localStorage[dstDiv.id] = localStorage[srcDiv.id];
-			localStorage.removeItem(srcDiv.id);
-		}
-		else if (!localStorage[srcDiv.id] && localStorage[dstDiv.id]) {
-			localStorage[srcDiv.id] = localStorage[dstDiv.id];
-			localStorage.removeItem(dstDiv.id);
-		}
-		else if (localStorage[srcDiv.id] && localStorage[dstDiv.id]) {
-			aux = localStorage[srcDiv.id];
-			localStorage[srcDiv.id] = localStorage[dstDiv.id];
-			localStorage[dstDiv.id] = aux;
-		}
+		// Persist (bkId, json_info) interchanged.
+		var aux;
+		aux = localStorage[srcDiv.id];
+		localStorage[srcDiv.id] = localStorage[dstDiv.id];
+		localStorage[dstDiv.id] = aux;
 		
 		// Interchange the bookmarks visually.
 		aux = dstDiv.id;

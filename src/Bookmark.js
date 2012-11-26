@@ -181,6 +181,15 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 				prevId = currId;
 				i++;
 				currId = BkIdGenerator.getId(i);
+				
+				// Added for prev & next buttons
+				var noLinks = BkIdGenerator.getSuffix(currId);
+				var page = parseInt(localStorage["page"]);
+					
+				if (noLinks / (MAXIMUM_PAGE_LINKS + 1) != page) {
+					page--;
+					localStorage["page"] = page;
+				}
 			}
 			localStorage.removeItem(prevId); 
 			window.location.reload(true);

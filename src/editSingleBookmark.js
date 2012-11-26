@@ -1,14 +1,5 @@
-//alert("intra pe aici--------??");
-function getLink() {
-	// alert("intra pe aici??");
-	chrome.tabs.getSelected(null, function(tab) {
-		document.getElementById("tabUrl").value = tab.url;
-		document.getElementById("tabTitle").value = tab.title;
-	});
-}
-
 // Get info from bookmark
-function populateForm() {
+window.onload = function populateForm() {
 	var temp = localStorage["noLinks"];
 	if (!temp) {
 		alert("ZERO");
@@ -58,9 +49,9 @@ function closePopup() {
 	window.close();
 }
 document.addEventListener('DOMContentLoaded', function() {
-	var divs = document.querySelectorAll('button');
-	for ( var i = 0; i < divs.length; i++) {
-		divs[i].addEventListener('click', addBookmark);
+	var bts = document.querySelectorAll('button');
+	if (bts.length == 2) {
+		bts[0].addEventListener('click', save);
+		bts[1].addEventListener('click', closePopup);
 	}
 });
-getLink();

@@ -17,6 +17,7 @@ body {
 }
 
 #page-switcher-next{
+	float: right;
 	margin-right: 10px;
 	margin-bottom: 5%;
 	right:0;
@@ -26,7 +27,7 @@ body {
 	float: left;
 	margin-left: 10px;
 	margin-bottom: 5%;
-	left:0;
+	
 }
 
 #settingsMenu {
@@ -41,12 +42,12 @@ body {
 
 .page-switcher {
 	font-size: 50px;
-	position: absolute;
-	float: right;
+	position: fixed;
 	top: 10%;
 	bottom: 5%;
 	width:5%;
 	height: 85%;
+	color: #505050;
 	background-color:transparent;
 }
 

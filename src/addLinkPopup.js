@@ -15,6 +15,7 @@ function addBookmark() {
 	if (category == "")
 		category = "Default";
 
+	
 	var name = BkIdGenerator.getNextId();
 	var thingy = {};
 	thingy.link = url;
@@ -25,14 +26,12 @@ function addBookmark() {
 	thingy.heightRatio = 1;
 	localStorage[name] = JSON.stringify(thingy);
 
-//	var views = chrome.extension.getViews();
-//	alert("views");
-//	for (var i in views) {
-//	  var location = views[i].location;
-//	  if (location.pathname == '/html/application.html') {
-//	    location.reload();
-//	  }
-//	}
+	// Refresh all new tab pages to show the new bookmark.
+	var views = chrome.extension.getViews();
+	for (var i in views) {
+		var location = views[i].location;
+		location.reload();
+	}
 	
 	window.close();
 }

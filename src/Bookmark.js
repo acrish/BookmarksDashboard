@@ -173,9 +173,9 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 		var bkId = this.parentNode.parentNode.id;
 		if (confirm("Really want to remove " + bkId + "?") && localStorage[bkId]) {
 			var prevId = bkId;
-			var i = parseInt(BkIdGenerator.getSuffix(prevId)) + 1;
+			var i = BkIdGenerator.getSuffix(prevId) + 1;
 			var currId = BkIdGenerator.getId(i);
-
+			
 			while (localStorage[currId]) {
 				localStorage[prevId] =	localStorage[currId];
 				prevId = currId;
@@ -188,15 +188,6 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 		
 	});
 	hoverButtonsDiv.appendChild(removeButton);
-	
-	// Add settings button.
-	var settingsIcon= createBookmarkHoverImage("images/setting.png", "Settings", function() {
-		onHoverButtonClick = true;
-		// Load settings dialog 
-		window.open("editSingleBookmark.html");
-		//TODO make the settings persistent
-	});
-	hoverButtonsDiv.appendChild(settingsIcon);
 	
 	return hoverButtonsDiv;
 }
@@ -219,8 +210,7 @@ function createBookmarkHoverImage(src, text, onclickFunction) {
 	hoverImage.onmouseout = function() {
 		this.style.border = "0";
 	};
-	hoverImage.title = text;
-
+	
 	
 	return hoverImage;
 }

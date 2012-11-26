@@ -1,31 +1,51 @@
 /**
  * Defines the bookmark wrapper class.
- * @param width the width of the wrapper div
- * @param height the height of the wrapper div
+ * @param width the default width of the wrapper div
+ * @param height the default height of the wrapper div
  * @param an array with all bookmark wrappers
  * @param options the options for creating a wrapper
  * @returns the newly created wrapper object with a bookmark inside.
  */
 function Wrapper(width, height, id, options) {
+	var margin = options['margin'];
+	
 	// Wrap the div so that dropping occurs in a specific area
 	var divWrapper = document.createElement("div");
 	divWrapper.id = "wrapper" + id;
-	divWrapper.style.width = width + "px";
-	divWrapper.style.height = height + "px";
 	divWrapper.className = "WrapperDiv";
+	divWrapper.style.margin = margin + "px";
+	
+	var widthRatio = 1;
+	var heightRatio = 1;
 	
 	// Wrapper with normal bookmark.
 	var bookmark;
 	if (!options['isMockup']) {
-		var bookmarkWrappers = options['wrappers'];
+		// Set width and height.
+		info = localStorage[options['localStorageId']];
+		if (info == null) {
+			alert("There was an internal problem");
+		}
+		var obj = JSON.parse(info);
+		widthRatio = obj.widthRatio;
+		heightRatio = obj.heightRatio;
+		
+		var wrapperWidth = calculateNewDimension(width, widthRatio, margin);
+		var wrapperHeight = calculateNewDimension(height, heightRatio, margin);
+		$(divWrapper).width(wrapperWidth);
+		$(divWrapper).height(wrapperHeight);
 		
 		// Creates the bookmark.
-		bookmark = new Bookmark(width, height, id, {"isMockup": false, 'localStorageId': options['localStorageId']});
+		bookmark = new Bookmark(wrapperWidth, wrapperHeight, id, 
+				{"isMockup": false, 'localStorageId': options['localStorageId']});
 		divWrapper.appendChild(bookmark.getDiv());
-		
+
 		// Drag and drop event handler
-		dragAndDrop(divWrapper, bookmarkWrappers);
+		dragAndDrop(divWrapper, options['wrappers']);
 	} else { // Wrapper with mockup bookmark.
+		$(divWrapper).width(width);
+		$(divWrapper).height(height);
+		
 		bookmark = new Bookmark(width, height, id, {"isMockup": true});
 		divWrapper.appendChild(bookmark.getDiv());
 	}
@@ -54,18 +74,41 @@ function Wrapper(width, height, id, options) {
 	/**
 	 * Resizes the inner bookmark to the wrapper size.
 	 */
-	this.resizeBookmark = function(width, height) {
-		bookmark.setDimensions(width, height);
+	this.resize = function(newWidthRatio, newHeightRatio) {
+		widthRatio = newWidthRatio;
+		heightRatio = newHeightRatio;
+		var newWidth = calculateNewDimension(width, newWidthRatio, margin);
+		var newHeight = calculateNewDimension(height, newHeightRatio, margin);
+		bookmark.setDimensions(newWidth, newHeight);
+		
+		// Save new settings.
+		info = localStorage[options['localStorageId']];
+		if (info == null) {
+			alert("There was an internal problem");
+		}
+		var obj = JSON.parse(info);
+		obj.widthRatio = newWidthRatio;
+		obj.heightRatio = newHeightRatio;
+		localStorage[options['localStorageId']] = JSON.stringify(obj);
 	};
 	
 	/**
-	 * @param newDiv the new bookmark div
+	 * Sets the new bookmark div.
 	 */
 	this.setBookmarkDiv = function(newDiv) {
 		divWrapper.appendChild(newDiv);
 		this.getBookmark().setDiv(newDiv);
-		this.resizeBookmark($(divWrapper).width(), $(divWrapper).height());
+		this.resize(widthRatio, heightRatio);
 	};
+}
+
+/**
+ * @param length
+ * @param ratio
+ * @param margin
+ */
+function calculateNewDimension(length, ratio, margin) {
+	return length * ratio + margin * (ratio - 1) * 2;
 }
 
 /**
@@ -79,10 +122,10 @@ function dragAndDrop(divWrapper, bookmarkWrappers) {
 		var data = event.dataTransfer.getData("Text");
 		var dstDiv = event.target;
 		var srcDiv = document.getElementById(data);
-		var srcWrapper = srcDiv.parentNode;
-		var dstWrapper = dstDiv.parentNode;
+		var srcWrapperDiv = srcDiv.parentNode;
+		var dstWrapperDiv = dstDiv.parentNode;
 		var aux;
-		dstWrapper.removeChild(dstDiv);
+		dstWrapperDiv.removeChild(dstDiv);
 
 		// Persist (bkId, json_info) interchanged. If there won't be empty bookmarks in the 
 		// dashboard, keep only the body of last if.
@@ -104,11 +147,10 @@ function dragAndDrop(divWrapper, bookmarkWrappers) {
 		aux = dstDiv.id;
 		dstDiv.id = srcDiv.id;
 		srcDiv.id = aux;
-		bookmarkWrappers[srcWrapper.id].setBookmarkDiv(dstDiv);
-		bookmarkWrappers[dstWrapper.id].setBookmarkDiv(srcDiv);
+		bookmarkWrappers[srcWrapperDiv.id].setBookmarkDiv(dstDiv);
+		bookmarkWrappers[dstWrapperDiv.id].setBookmarkDiv(srcDiv);
 	};
 	divWrapper.ondragover = function(event) {
 		event.preventDefault();
 	};
-//	alert("T");
 }

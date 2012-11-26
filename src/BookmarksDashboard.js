@@ -36,7 +36,7 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	var bookmarksWindowWidth = parseInt(bookmarksWindow.style.width);
 	var bookmarksWindowHeight = parseInt(bookmarksWindow.style.height);
 	bookmarksWindowWidth -= bookmarksWindowWidth / 10; // Necessary for css styling.
-	bookmarksWindowHeight -= bookmarksWindowHeight / 10;
+	bookmarksWindowHeight -= bookmarksWindowHeight / 10; // TODO maybe padding instead
 	
 	var divWidth = Math.floor(bookmarksWindowWidth / numOfColumns);
 	var divHeight = Math.floor(bookmarksWindowHeight / numOfRows);
@@ -46,8 +46,9 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	var id = 0;
 	var limit = numOfRows * numOfColumns;
 	for (; localStorage[BkIdGenerator.getId(id)] != null && id < limit; id++) {
-		var wrapper = new Wrapper(divWidth, divHeight, id,
-				{'isMockup': false, 'localStorageId': BkIdGenerator.getId(id), 'wrappers': bookmarkWrappers});
+		var wrapper = new Wrapper(divWidth, divHeight, id, 
+				{'isMockup': false, margin: WRAPPER_MARGIN,
+					'localStorageId': BkIdGenerator.getId(id),  'wrappers': bookmarkWrappers});
 		bookmarkWrappers[wrapper.getId()] = wrapper;
 		bookmarksWindow.appendChild(wrapper.getDiv());
 	}
@@ -69,15 +70,17 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 				maxWidth: maxWidth,
 				maxHeight: maxHeight,
 				stop: function(event, ui) {
-					bookmarkWrappers[ui.originalElement[0].id].resizeBookmark($(event.target).width(),
-							$(event.target).height());
+					var widthRatio = calculateRatio($(event.target).width(), divWidth);
+					var heightRatio = calculateRatio($(event.target).height(), divHeight);
+					bookmarkWrappers[ui.originalElement[0].id].resize(widthRatio, heightRatio);
 				}
 			});
 		}
 		
 		// Create mockup bookmarks.
 		for (; id < limit; id++) {
-			var wrapper = new Wrapper(divWidth, divHeight, id, {'isMockup': true});
+			var wrapper = new Wrapper(divWidth, divHeight, id,
+					{'isMockup': true, margin: WRAPPER_MARGIN,});
 			bookmarkWrappers[wrapper.getId()] = wrapper;
 			bookmarksWindow.appendChild(wrapper.getDiv());
 		}
@@ -87,12 +90,27 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	}
 }
 
+/**
+ * @param newWidth
+ * @param oldWidth
+ */
+function calculateRatio(newWidth, oldWidth) {
+	var ratio = Math.floor(newWidth / oldWidth * 10) / 10;
+	if (ratio < 1) {
+		ratio += 0.1;
+	}
+	return ratio;
+}
+
+/**
+ * @param bookmarksWindow
+ */
 function printHintMessage(bookmarksWindow) {
 	bookmarksWindow.style.width = "100%";
 	width = $(bookmarksWindow).width() / 3;
 	var message = document.createElement("p");
 	message.id = "hintMessage";
-	message.innerHTML = "When you are on a page you want to save, click on " +
+	message.innerHTML = "Click on " +
 			"<img src='images/lightbulb.png' class='hintImage' />" +
 			" to add it to bookmarks " +
 			"<img width='" + width + "' src='images/green_arrow.jpg' class='hintImage' />";
@@ -110,7 +128,9 @@ function supports_html5_storage() {
   }
 }
 
-// Test persistence:
+/**
+ *  Test persistence.
+ */
 function testPersistence() {
 	var stored = localStorage["last_thumbnail"];
 

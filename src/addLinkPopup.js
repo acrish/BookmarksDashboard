@@ -21,6 +21,8 @@ function addBookmark() {
 	thingy.title = descr;
 	thingy.categ = category;
 	thingy.image = "";
+	thingy.widthRatio = 1;
+	thingy.heightRatio = 1;
 	localStorage[name] = JSON.stringify(thingy);
 
 	window.close();

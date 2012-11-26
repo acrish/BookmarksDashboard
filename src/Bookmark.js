@@ -24,9 +24,12 @@ function Bookmark(width, height, id, options) {
 		if (info == null) {
 			alert("There was an internal problem");
 		}
+		
+		// Hover buttons.
 		hoverButtonsDiv = createHoverDivAndIcons(bookmarkDiv, id);
 		bookmarkDiv.appendChild(hoverButtonsDiv);
 		
+		// Inside link.
 		var obj = JSON.parse(info);
 		bookmarkDiv.style.backgroundImage = "url('" + obj.image + "')";
 		pageLink = obj.link;
@@ -37,6 +40,11 @@ function Bookmark(width, height, id, options) {
 		bookmarkTxt.href = pageLink;
 		bookmarkParagraph.appendChild(bookmarkTxt);
 		
+		// Category.
+		var categoryCssClass = Categories.getCategoryClass(obj.categ);
+		bookmarkDiv.className = DEFAULT_CLASS_NAME + " " + categoryCssClass;
+		
+		// Open bookmark.
 		bookmarkDiv.addEventListener("click", function() {
 			if (!onHoverButtonClick) {
 				window.location = pageLink;
@@ -76,22 +84,6 @@ function Bookmark(width, height, id, options) {
 		$(bookmarkDiv).width(newWidth);
 		$(bookmarkDiv).height(newHeight);
 	};
-}
-
-/**
- * @param id
- * @param url
- */
-function updateImage(id, url) {
-	name = BkIdGenerator.getId(id);
-	
-	var info = localStorage[name];
-	
-	if (info) {
-		var obj = JSON.parse(info);
-		obj.image = url;
-		localStorage[name] = JSON.stringify(obj);
-	}
 }
 
 /**
@@ -172,6 +164,7 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 			bookmarkDiv.className = DEFAULT_CLASS_NAME + " " + categoryCssClass;
 			HideDialog();
 			e.preventDefault();
+			updateCategory(id, category);
 		});
 	});
 	hoverButtonsDiv.appendChild(categoryButton);
@@ -209,6 +202,15 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 	});
 	hoverButtonsDiv.appendChild(removeButton);
 	
+		// Add settings button.
+	var settingsIcon= createBookmarkHoverImage("images/setting.png", "Settings", function() {
+		onHoverButtonClick = true;
+		// Load settings dialog
+		window.open("editSingleBookmark.html");
+		//TODO make the settings persistent
+		});
+	hoverButtonsDiv.appendChild(settingsIcon);
+
 	return hoverButtonsDiv;
 }
 
@@ -218,6 +220,34 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 function HideDialog() {
    $("#overlay").hide();
    $("#dialog").fadeOut(300);
+}
+   
+/**
+ * @param id
+ * @param url
+ */
+function updateImage(id, url) {
+	name = BkIdGenerator.getId(id);
+	var info = localStorage[name];
+	if (info) {
+		var obj = JSON.parse(info);
+		obj.image = url;
+		localStorage[name] = JSON.stringify(obj);
+	}
+}
+
+/**
+ * @param id
+ * @param category
+ */
+function updateCategory(id, category) {
+	name = BkIdGenerator.getId(id);
+	var info = localStorage[name];
+	if (info) {
+		var obj = JSON.parse(info);
+		obj.categ = category;
+		localStorage[name] = JSON.stringify(obj);
+	}
 }
 
 /**

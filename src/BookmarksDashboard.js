@@ -18,7 +18,22 @@ window.onload = function() {
 		page = parseInt(exists);
 	else
 		localStorage["page"] = 0;
-		
+
+	
+	var nextButton = document.getElementById("page-switcher-next");
+	nextButton.onclick = next;
+	var prevButton = document.getElementById("page-switcher-prev");
+	prevButton.onclick = prev;
+	
+	createGlobalMenu();
+	createBookmarksDivs('bookmarksDiv', NUM_OF_ROWS, NUM_OF_COLUMNS);
+};
+
+/**
+ * Creates the global menu.
+ */
+function createGlobalMenu() {
+	// Remove all bookmarks button.
 	var removeAllImage = document.getElementById("removeAllImage");
 	removeAllImage.onclick=function() {
 		if (confirm("Do you really want to remove all your bookmarks?")) {
@@ -30,8 +45,8 @@ window.onload = function() {
 	removeAllImage.alt="Remove All";
 	removeAllImage.title="Remove All Bookmarks";
 	removeAllImage.className = "hoverImage";
-	removeAllImage.style.marginLeft = "15px";
 	
+<<<<<<< HEAD
 	Categories.populateDialogBox();
 
 	var nextButton = document.getElementById("page-switcher-next");
@@ -41,6 +56,12 @@ window.onload = function() {
 	
 	createBookmarksDivs('bookmarksDiv', NUM_OF_ROWS, NUM_OF_COLUMNS);
 };
+=======
+	// Settings button.
+	var globalSettings = document.getElementById("globalSettings");
+	globalSettings.className = "hoverImage";
+}
+>>>>>>> 80d00d8c4f6112e9479f5ffbee2ed5f42a542fd6
 
 /**
  * @param bookmarksWindowId the id of the div that contains the bookmarks
@@ -116,10 +137,7 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
  * @param oldWidth
  */
 function calculateRatio(newWidth, oldWidth) {
-	var ratio = Math.floor(newWidth / oldWidth * 10) / 10;
-	if (ratio < 1) {
-		ratio += 0.1;
-	}
+	var ratio = Math.round(newWidth / oldWidth * 2) / 2;
 	return ratio;
 }
 

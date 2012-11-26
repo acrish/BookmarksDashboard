@@ -26,20 +26,23 @@ body {
 #page-switcher-prev{
 	float: left;
 	margin-left: 10px;
-	margin-bottom: 5%;
-	
+	margin-bottom: 5%;	
 }
 
 #settingsMenu {
-	position: absolute;
-	top:0;
-	right:0;
-	background-color: #D0D0D0;
-	-moz-border-radius-bottomleft: 15px;
-	border-bottom-left-radius: 15px;
-	background-color: #BBA28C;
+	position: fixed;
+	top: 0;
+	right: 0;
+	border: 5px solid silver;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	margin: 10px;
+	padding: 5px 10px;
 }
 
+.page-switcher:hover{
+	opacity: 1.0;
+}
 .page-switcher {
 	font-size: 50px;
 	position: fixed;
@@ -48,6 +51,7 @@ body {
 	width:5%;
 	height: 85%;
 	color: #505050;
+	opacity: 0.0;
 	background-color:transparent;
 }
 
@@ -55,6 +59,7 @@ body {
 	width: 30px;
 	height: 30px;
 	float: left;
+	margin-right: 5px;
 }
 
 /* Bookmark divs */

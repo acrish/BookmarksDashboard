@@ -27,10 +27,8 @@ function save() {
 	var descr = document.getElementById("tabTitle").value;
 	if (category == "")
 		category = "Default";
-
-	var noLinks = localStorage["noLinks"];
-	if (!noLinks)
-		localStorage["noLinks"] = 0;
+	alert("parent node: " + this.parentNode.parentNode);
+	//window.opener.document.getElementById()
 	var name = "tab" + noLinks;
 	
 	var thingy = {};

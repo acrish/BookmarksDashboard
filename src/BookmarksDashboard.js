@@ -106,20 +106,16 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 				}
 			});
 		}
-		
-		// Create mockup bookmarks.
-		var page = parseInt(localStorage["page"]);
-		if (page == 0) {
-			for (var i = ids.length, limit = numOfRows * numOfColumns; i < limit; i++) {
-				var wrapper = new Wrapper(divWidth, divHeight, (-1) * i, 
-						{'isMockup': true, margin: WRAPPER_MARGIN});
-				bookmarkWrappers[wrapper.getId()] = wrapper;
-				bookmarksWindow.appendChild(wrapper.getDiv());
-			}
+	} 
+	// Create mockup bookmarks.
+	var page = parseInt(localStorage["page"]);
+	if (page == 0) {
+		for (var i = ids.length, limit = numOfRows * numOfColumns; i < limit; i++) {
+			var wrapper = new Wrapper(divWidth, divHeight, (-1) * i, 
+					{'isMockup': true, margin: WRAPPER_MARGIN});
+			bookmarkWrappers[wrapper.getId()] = wrapper;
+			bookmarksWindow.appendChild(wrapper.getDiv());
 		}
-	} else { // Hint message.
-		printHintMessage(bookmarksWindow);
-		document.getElementById("settingsMenu").style.display = "none";
 	}
 }
 
@@ -131,7 +127,7 @@ function getDisplayOrder() {
 	// TODO delete
 	var dd = {
 			order: "default",
-			type: null
+			type: "fun"
 		};
 	localStorage["displayOrder"] = JSON.stringify(dd);
 	// TODO;
@@ -162,14 +158,13 @@ function getBookmarksIds(numOfRows, numOfColumns, displayOrder) {
 	// Get correct ids from local storage.
 	var page = parseInt(localStorage["page"]);
 	var ids = new Array();
-	if (displayOrder.order == "default") {
-		// Id starts from current_page * numOfRows * numOfColumns .
-		var id = page * numOfRows * numOfColumns;
-		var limit = (page + 1) * numOfRows * numOfColumns;
-		for (; localStorage[BkIdGenerator.getId(id)] != null && id < limit; id++) {
+	
+	if (displayOrder.order == "default") { // Default ordering.
+		for (var id = page * numOfRows * numOfColumns, limit = (page+1) * numOfRows * numOfColumns;
+				localStorage[BkIdGenerator.getId(id)] != null && id < limit; id++) {
 			ids.push(id);
 		}
-	} else if (displayOrder.order == "alphabetical") {
+	} else if (displayOrder.order == "alphabetical") { // Alphabetical ordering.
 		var objects = new Array();
 		for (var id = 0; localStorage[BkIdGenerator.getId(id)] != null; id++) {
 			var obj = {
@@ -183,12 +178,26 @@ function getBookmarksIds(numOfRows, numOfColumns, displayOrder) {
 		objects.sort(function(a, b) {
 			return a.title.localeCompare(b.title);
 		});
-		
 		// Save ids.
-		for (var i = 0, limit = numOfRows * numOfColumns, objLimit = objects.length;
-				i < limit && i < objLimit; i++) {
+		for (var i = page * numOfRows * numOfColumns, objLimit = objects.length,
+				limit = (page + 1) * numOfRows * numOfColumns; i < limit && i < objLimit; i++) {
 			ids.push(objects[i].localStorageId);
 		}
+	} else if (displayOrder.order == "category") {
+		var objects = new Array();
+		for (var id = 0; localStorage[BkIdGenerator.getId(id)] != null; id++) {
+			if (JSON.parse(localStorage[BkIdGenerator.getId(id)]).categ == displayOrder.type) {
+				objects.push(id);				
+			}
+		}
+		
+		// Save ids.
+		for (var i = page * numOfRows * numOfColumns, objLimit = objects.length,
+				limit = (page + 1) * numOfRows * numOfColumns; i < limit && i < objLimit; i++) {
+			ids.push(objects[i]);
+		}
+	} else {
+		alert("There was an internal problem");
 	}
 	
 	return ids;
@@ -204,6 +213,7 @@ function calculateRatio(newWidth, oldWidth) {
 }
 
 /**
+ * TODO not used anymore, maybe delete
  * @param bookmarksWindow
  */
 function printHintMessage(bookmarksWindow) {

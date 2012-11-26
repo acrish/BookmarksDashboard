@@ -19,6 +19,7 @@ window.onload = function() {
 	else
 		localStorage["page"] = 0;
 
+	Categories.populateDialogBox();
 	
 	var nextButton = document.getElementById("page-switcher-next");
 	nextButton.onclick = next;
@@ -46,22 +47,10 @@ function createGlobalMenu() {
 	removeAllImage.title="Remove All Bookmarks";
 	removeAllImage.className = "hoverImage";
 	
-<<<<<<< HEAD
-	Categories.populateDialogBox();
-
-	var nextButton = document.getElementById("page-switcher-next");
-	nextButton.onclick = next;
-	var prevButton = document.getElementById("page-switcher-prev");
-	prevButton.onclick = prev;
-	
-	createBookmarksDivs('bookmarksDiv', NUM_OF_ROWS, NUM_OF_COLUMNS);
-};
-=======
 	// Settings button.
 	var globalSettings = document.getElementById("globalSettings");
 	globalSettings.className = "hoverImage";
 }
->>>>>>> 80d00d8c4f6112e9479f5ffbee2ed5f42a542fd6
 
 /**
  * @param bookmarksWindowId the id of the div that contains the bookmarks

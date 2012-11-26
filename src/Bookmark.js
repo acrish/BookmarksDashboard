@@ -163,8 +163,8 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 			categoryCssClass = Categories.getCategoryClass(categ);
 			bookmarkDiv.className = DEFAULT_CLASS_NAME + " " + categoryCssClass;
 			HideDialog();
-			e.preventDefault();
-			updateCategory(id, category);
+			e.preventDefault();			
+			updateCategory(id, categ);
 		});
 	});
 	hoverButtonsDiv.appendChild(categoryButton);

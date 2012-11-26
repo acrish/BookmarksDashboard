@@ -19,9 +19,9 @@ body {
 	background-color: #D0D0D0;
 }
 
-#removeAllImage {
-	width: 20px;
-	height: 20px;
+.hoverImage {
+	width: 30px;
+	height: 30px;
 	float: left;
 }
 

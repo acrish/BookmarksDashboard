@@ -1,4 +1,4 @@
-var BOOKMARK_MARGIN = 10; 
+var BOOKMARK_MARGIN = 0; 
 var DEFAULT_CLASS_NAME = "BookmarkDiv";
 
 function updateImage(id, url) {
@@ -21,13 +21,12 @@ var onHoverButtonClick = false; // Workaround for div/button click bug.
  * Defines the bookmark class.
  * @param width the width of the wrapper div
  * @param height the height of the wrapper div
+ * @param options options for creating a bookmark
  * @returns the newly created bookmark object
  */
-function Bookmark(width, height, id) {	
+function Bookmark(width, height, id, options) {	
 	// Variables
 	var pageLink = "";
-	var image = "";
-	var category = "";
 	
 	// Create bookmark div.
 	var bookmarkDiv = createBookmarkDiv(width, height, id);
@@ -36,37 +35,38 @@ function Bookmark(width, height, id) {
 	var hoverButtonsDiv = createHoverDivAndIcons(bookmarkDiv);
 	bookmarkDiv.appendChild(hoverButtonsDiv);
 	
-	// Load bookmarks links;
-	var info = localStorage[BkIdGenerator.getId(id)];
-	if (info) {
-		var obj = JSON.parse(info);
-		bookmarkDiv.style.backgroundImage = "url('" + obj.image + "')";
-		pageLink = obj.link;
+	// Add content to bookmark div.
+	var bookmarkParagraph = document.createElement("p");
+	var bookmarkTxt; // Modify this in order to be added to bookmarkParagraph.
+	if (options['isMockup']) { // Add a mockup text
 		
-		var bookmarkParagraph = document.createElement("p");
-		bookmarkParagraph.className = "bookmarkParagraph";
-		
-		var bookmarkTxt = document.createElement("a");
-		bookmarkTxt.innerHTML = obj.title;
-		bookmarkTxt.href = pageLink;
-		
-		bookmarkParagraph.appendChild(bookmarkTxt);
-		bookmarkDiv.appendChild(bookmarkParagraph);
-	}
-	
-	bookmarkDiv.addEventListener("click", function() {
-		if (!onHoverButtonClick) {
-			if (pageLink == "") {
-				openNewBookmarkWindow();
-			} else {
-				// load file
-				window.location = pageLink;
-			}
-		} else {
-			onHoverButtonClick = false;
-		}
+	} else { // Load bookmark link.
+		var info = localStorage[BkIdGenerator.getId(id)];
+		if (info) {
+			var obj = JSON.parse(info);
+			bookmarkDiv.style.backgroundImage = "url('" + obj.image + "')";
+			pageLink = obj.link;
 
-	});
+			bookmarkTxt = document.createElement("a");
+			bookmarkTxt.innerHTML = obj.title;
+			bookmarkTxt.href = pageLink;
+		}
+		
+		bookmarkDiv.addEventListener("click", function() {
+			if (!onHoverButtonClick) {
+				if (pageLink == "") {
+					openNewBookmarkWindow();
+				} else {
+					// load file
+					window.location = pageLink;
+				}
+			} else {
+				onHoverButtonClick = false;
+			}
+		});
+	}
+	bookmarkParagraph.appendChild(bookmarkTxt);
+	bookmarkDiv.appendChild(bookmarkParagraph);
 
 	/**
 	 * @return the div for this bookmark
@@ -127,6 +127,10 @@ function createBookmarkDiv(width, height, id) {
 	return bookmarkDiv;
 }
 
+/**
+ * @param bookmarkDiv the bookmark div
+ * @returns the newly created hover div
+ */
 function createHoverDivAndIcons(bookmarkDiv) {
 	// Create hover div.
 	var hoverButtonsDiv = document.createElement("div");
@@ -211,16 +215,4 @@ function createBookmarkHoverImage(src, text, onclickFunction) {
 	
 	
 	return hoverImage;
-}
-
-function openNewBookmarkWindow() {
-	newwindow = window.open('addLinkPopup.html','name','height=200,width=150');
-	$("#body").html("<div id='mynewdiv'>hi</div>");
-	if (window.focus) {
-		newwindow.focus();
-	}
-}
-
-function bookmarkOnClick(e) {
-	alert("Bookmarck clicked!! ");
 }

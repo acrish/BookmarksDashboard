@@ -42,12 +42,16 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	// Create wrappers and bookmarks.
 	var bookmarkWrappers = new Array();
 	var id = 0;
-	while (localStorage[BkIdGenerator.getId(id)] != null && id < numOfRows * numOfColumns) {
-		// Create a wrapper with a bookmark inside.
-		var wrapper = new Wrapper(divWidth, divHeight, id, bookmarkWrappers);
+	var limit = numOfRows * numOfColumns;
+	for (;localStorage[BkIdGenerator.getId(id)] != null && id < limit; id++) {
+		var wrapper = new Wrapper(divWidth, divHeight, id, {'isMockup': false, 'wrappers': bookmarkWrappers});
 		bookmarkWrappers[wrapper.getId()] = wrapper;
 		bookmarksWindow.appendChild(wrapper.getDiv());
-		id++;
+	}
+	
+	// Create mockup bookmarks.
+	for (; id < limit; id++) {
+		
 	}
 	
 	// Make wrappers resizable.

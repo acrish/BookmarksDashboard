@@ -10,7 +10,7 @@ body {
 	text-align: center;
 }
 
-#bookmarksDiv {
+#bookmarksDiv{
 	margin-top: 40px;
 	margin-left: auto;
 	margin-right: auto;	
@@ -32,12 +32,6 @@ body {
 	float: left;
 }
 
-/* Bookmark divs */
-.WrapperDiv {
-	background: #fff;
-	float: left;
-}
-
 .BookmarkDiv {
 	background: grey;
 	position: relative;
@@ -47,19 +41,11 @@ body {
 	color: #291717;
 }
 
-/* Bookmark link */
-.bookmarkParagraph {
-	position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 50%;
-    height: 30%;
-    margin: auto;
+.WrapperDiv {
+	float: left;
+	margin: 10px;
 }
 
-/* Categories */
 .defaultCategory {
 	border-radius: 10px;
 	box-shadow: 10px 10px 5px orange;
@@ -75,7 +61,6 @@ body {
 	box-shadow: 10px 10px 5px blue;
 }
 
-/* Hint on 0 bookmarks */
 #hintMessage {
 	font-size: 30px;
 	position: absolute;

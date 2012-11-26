@@ -1,0 +1,21 @@
+#global_dialog {
+	width: 380px;
+	height: 410px;
+	top: 25%;
+	left: 50%;
+	margin-left: -190px;
+	margin-top: -100px;
+}
+
+#orderingCriteriaSelection {
+	text-align: left;
+}
+
+.margin30 {
+	margin: 30px;
+}
+
+.prefix {
+	font-weight: bold;
+	text-align: left;	
+}

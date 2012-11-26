@@ -150,7 +150,7 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 	var categoryButton= createBookmarkHoverImage("images/category.png", "Category", function() {
 		onHoverButtonClick = true;
 		$("#overlay").show();
-		$("#dialog").fadeIn(300);
+		$("#categories_dialog").fadeIn(300);
         $("#overlay").unbind("click");
 		$("#btnClose").click(function (e) {
 		     HideDialog();
@@ -219,7 +219,7 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
  */
 function HideDialog() {
    $("#overlay").hide();
-   $("#dialog").fadeOut(300);
+   $("#categories_dialog").fadeOut(300);
 }
    
 /**

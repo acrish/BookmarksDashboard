@@ -28,6 +28,15 @@ window.onload = function() {
 	
 	createGlobalMenu();
 	createBookmarksDivs('bookmarksDiv', NUM_OF_ROWS, NUM_OF_COLUMNS);
+
+	var bgImage = localStorage["bgImage"];
+	if (!bgImage) {
+		$("html").css("background", '#fff');
+	}
+	else {
+		$("html").css("background-image", 'url(' + bgImage + ')');
+		$("html").css("background-repeat", "repeat");
+	}
 };
 
 /**
@@ -50,6 +59,8 @@ function createGlobalMenu() {
 	// Settings button.
 	var globalSettings = document.getElementById("globalSettings");
 	globalSettings.className = "hoverImage";
+	globalSettings.title = "Global settings";
+	createSettingsMenu(globalSettings);
 }
 
 /**

@@ -9,7 +9,9 @@
 	<script src="Categories.js"></script>
 	<script src="BookmarksDashboard.js"></script>
 	<script src="BkIdGenerator.js"></script>
+	<script src="SettingsMenu.js"></script>
 	<link rel="stylesheet" href="BookmarksDashboard.css">
+	<link rel="stylesheet" href="SettingsMenu.css">
 	
 	<script src="library/jquery.min.js"></script>
 	<script src="library/jquery-ui.min.js"></script>
@@ -31,13 +33,40 @@
     </button>
 
     <div id="overlay" class="web_dialog_overlay"></div>
-    <div id="dialog" class="web_dialog">
+    <div id="categories_dialog" class="web_dialog">
 		<div class="web_dialog_title">
 			Select Category
 			<a href="#" id="btnClose" class="align_right" style="float: right">Close</a>
 		</div>
 		<div id="categories"></div>
 		<input id="btnSubmit" type="button" value="Submit"/>
+	</div>
+	
+	<div id="global_dialog" class="web_dialog">
+		<div class="web_dialog_title">
+			Bookmarks Dashboard Settings
+			<a href="#" id="btnCloseSettings" class="align_right" style="float: right">Close</a>
+		</div>
+		<div class="prefix margin30">Bookmarks size:<br/>
+			<input type="checkbox" name="resize" value="resize_to_default"/>
+			<span style="font-weight: normal">Resize to default</span>
+		</div>
+		<hr/>
+		<div id="orderingCriteriaSelection" class="margin30">
+			<div class="prefix">Ordering criteria:</div>
+			<input type="radio" name="orderCriteria" value="alphabetically"/>Alphabetically<br/>
+			<input type="radio" name="orderCriteria" value="oncategory"/>On category<br/>
+			<input type="radio" name="orderCriteria" value="dragndrop" checked="checked"/>Drag'n drop
+			<br/>
+		</div>
+		<hr/>
+		<div class="prefix margin30">Select background image:<br/>
+			<select id="backgroundImageSelect">
+				<option value="None">None</option>
+			</select>
+		</div>
+		<br/>
+		<input id="btnSubmitSettings" type="button" value="Submit"/>
 	</div>
 </body>
 

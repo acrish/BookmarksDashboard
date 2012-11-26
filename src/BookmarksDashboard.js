@@ -1,5 +1,6 @@
 var NUM_OF_ROWS = 3;
 var NUM_OF_COLUMNS = 4;
+var WRAPPER_MARGIN = 10;
 
 /**
  * Executes function on page loading.
@@ -43,27 +44,25 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	var bookmarkWrappers = new Array();
 	var id = 0;
 	var limit = numOfRows * numOfColumns;
-	for (;localStorage[BkIdGenerator.getId(id)] != null && id < limit; id++) {
-		var wrapper = new Wrapper(divWidth, divHeight, id, {'isMockup': false, 'wrappers': bookmarkWrappers});
+	for (; localStorage[BkIdGenerator.getId(id)] != null && id < limit; id++) {
+		var wrapper = new Wrapper(divWidth, divHeight, id,
+				{'isMockup': false, 'localStorageId': BkIdGenerator.getId(id), 'wrappers': bookmarkWrappers});
 		bookmarkWrappers[wrapper.getId()] = wrapper;
 		bookmarksWindow.appendChild(wrapper.getDiv());
 	}
 	
-	// Create mockup bookmarks.
-	for (; id < limit; id++) {
-		
-	}
-	
 	// Make wrappers resizable.
 	if (id > 0) {
-		var minWidth = divWidth / 2; // Same with grid width.
-		var minHeight = divHeight / 2; // Same with grid height.
-		var maxWidth = divWidth * 2;
-		var maxHeight = divHeight * 2;
+		var minWidth = divWidth / 2 - WRAPPER_MARGIN;
+		var minHeight = divHeight / 2 - WRAPPER_MARGIN;
+		var gridWidth = divWidth / 2 + WRAPPER_MARGIN;
+		var gridHeight = divHeight / 2 + WRAPPER_MARGIN;
+		var maxWidth = (divWidth + WRAPPER_MARGIN) * 2;
+		var maxHeight = (divHeight + WRAPPER_MARGIN) * 2;
 		for (var wrapper in bookmarkWrappers) {
 			$("#" + wrapper).resizable({
 				ghost: true,
-				grid: [minWidth, minHeight],
+				grid: [gridWidth, gridHeight],
 				minWidth: minWidth,
 				minHeight: minHeight,
 				maxWidth: maxWidth,
@@ -73,6 +72,13 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 							$(event.target).height());
 				}
 			});
+		}
+		
+		// Create mockup bookmarks.
+		for (; id < limit; id++) {
+			var wrapper = new Wrapper(divWidth, divHeight, id, {'isMockup': true});
+			bookmarkWrappers[wrapper.getId()] = wrapper;
+			bookmarksWindow.appendChild(wrapper.getDiv());
 		}
 	} else { // Hint message.
 		printHintMessage(bookmarksWindow);
@@ -85,9 +91,9 @@ function printHintMessage(bookmarksWindow) {
 	width = $(bookmarksWindow).width() / 3;
 	var message = document.createElement("p");
 	message.id = "hintMessage";
-	message.innerHTML = "Click on " +
+	message.innerHTML = "When you are on a page you want to save, click on " +
 			"<img src='images/lightbulb.png' class='hintImage' />" +
-			" to add a bookmark " +
+			" to add it to bookmarks " +
 			"<img width='" + width + "' src='images/green_arrow.jpg' class='hintImage' />";
 	bookmarksWindow.appendChild(message);
 }

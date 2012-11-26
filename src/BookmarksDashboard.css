@@ -56,20 +56,24 @@ body {
 	float: left;
 }
 
-.BookmarkDiv {
-	background: grey;
-	position: relative;
-	background-size: 100% 100%;
-	float: left;
-	background-color: #FBF6F7;
-	color: #291717;
-}
-
+/* Bookmark divs */
 .WrapperDiv {
+	border-radius: 10px;
+	background-color: grey;
 	float: left;
 	margin: 10px;
 }
 
+.BookmarkDiv {
+	border-radius: 10px;
+	background-size: 100% 100%;
+	background-color: #FBF6F7;
+	color: #291717;
+	float: left;
+	position: relative;
+}
+
+/* Categories */
 .defaultCategory {
 	border-radius: 10px;
 	box-shadow: 10px 10px 5px orange;
@@ -85,6 +89,7 @@ body {
 	box-shadow: 10px 10px 5px blue;
 }
 
+/* Hint on 0 messages */
 #hintMessage {
 	font-size: 30px;
 	position: absolute;

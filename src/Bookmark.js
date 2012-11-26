@@ -1,17 +1,4 @@
-var BOOKMARK_MARGIN = 0; 
 var DEFAULT_CLASS_NAME = "BookmarkDiv";
-
-function updateImage(id, url) {
-	name = BkIdGenerator.getId(id);
-	
-	var info = localStorage[name];
-	
-	if (info) {
-		var obj = JSON.parse(info);
-		obj.image = url;
-		localStorage[name] = JSON.stringify(obj);
-	}
-}
 
 var onHoverButtonClick = false; // Workaround for div/button click bug.
 
@@ -19,7 +6,7 @@ var onHoverButtonClick = false; // Workaround for div/button click bug.
  * Defines the bookmark class.
  * @param width the width of the wrapper div
  * @param height the height of the wrapper div
- * @param options options for creating a bookmark
+ * @param options the options for creating a bookmark
  * @returns the newly created bookmark object
  */
 function Bookmark(width, height, id, options) {	
@@ -29,41 +16,40 @@ function Bookmark(width, height, id, options) {
 	// Create bookmark div.
 	var bookmarkDiv = createBookmarkDiv(width, height, id);
 	
-	// Create hover div and buttons.
-	var hoverButtonsDiv = createHoverDivAndIcons(bookmarkDiv, id);
-	bookmarkDiv.appendChild(hoverButtonsDiv);
-	
 	// Add content to bookmark div.
+	var hoverButtonsDiv = null;
 	var bookmarkParagraph = document.createElement("p");
-	var bookmarkTxt; // Modify this in order to be added to bookmarkParagraph.
-	if (options['isMockup']) { // Add a mockup text
-		
-	} else { // Load bookmark link.
-		var info = localStorage[BkIdGenerator.getId(id)];
-		if (info) {
-			var obj = JSON.parse(info);
-			bookmarkDiv.style.backgroundImage = "url('" + obj.image + "')";
-			pageLink = obj.link;
-
-			bookmarkTxt = document.createElement("a");
-			bookmarkTxt.innerHTML = obj.title;
-			bookmarkTxt.href = pageLink;
+	if (!options['isMockup']) { // Load bookmark link.
+		var info = localStorage[options['localStorageId']];
+		if (info == null) {
+			alert("There was an internal problem");
 		}
+		hoverButtonsDiv = createHoverDivAndIcons(bookmarkDiv, id);
+		bookmarkDiv.appendChild(hoverButtonsDiv);
+		
+		var obj = JSON.parse(info);
+		bookmarkDiv.style.backgroundImage = "url('" + obj.image + "')";
+		pageLink = obj.link;
+		
+		var bookmarkParagraph = document.createElement("p");
+		var bookmarkTxt = document.createElement("a");
+		bookmarkTxt.innerHTML = obj.title;
+		bookmarkTxt.href = pageLink;
+		bookmarkParagraph.appendChild(bookmarkTxt);
 		
 		bookmarkDiv.addEventListener("click", function() {
 			if (!onHoverButtonClick) {
-				if (pageLink == "") {
-					openNewBookmarkWindow();
-				} else {
-					// load file
-					window.location = pageLink;
-				}
+				window.location = pageLink;
 			} else {
 				onHoverButtonClick = false;
 			}
 		});
+		
+	} else { // Add a mockup text.
+		bookmarkParagraph.innerHTML = "When you are on a page you want to save, click on " +
+			"<img src='images/lightbulb.png' class='hintImage' />" +
+			" to add it to bookmarks ";
 	}
-	bookmarkParagraph.appendChild(bookmarkTxt);
 	bookmarkDiv.appendChild(bookmarkParagraph);
 
 	/**
@@ -87,10 +73,25 @@ function Bookmark(width, height, id, options) {
 	 * Sets the div dimensions.
 	 */
 	this.setDimensions = function(newWidth, newHeight) {
-		$(bookmarkDiv).width(newWidth - 2 * BOOKMARK_MARGIN);
-		$(bookmarkDiv).height(newHeight - 2 * BOOKMARK_MARGIN);
-		bookmarkDiv.style.margin = BOOKMARK_MARGIN + "px";
+		$(bookmarkDiv).width(newWidth);
+		$(bookmarkDiv).height(newHeight);
 	};
+}
+
+/**
+ * @param id
+ * @param url
+ */
+function updateImage(id, url) {
+	name = BkIdGenerator.getId(id);
+	
+	var info = localStorage[name];
+	
+	if (info) {
+		var obj = JSON.parse(info);
+		obj.image = url;
+		localStorage[name] = JSON.stringify(obj);
+	}
 }
 
 /**
@@ -105,9 +106,8 @@ function createBookmarkDiv(width, height, id) {
 	bookmarkDiv.id = BkIdGenerator.getId(id);
 	
 	// Div style.
-	$(bookmarkDiv).width(width - 2 * BOOKMARK_MARGIN);
-	$(bookmarkDiv).height(height - 2 * BOOKMARK_MARGIN);
-	bookmarkDiv.style.margin = BOOKMARK_MARGIN + "px";
+	$(bookmarkDiv).width(width);
+	$(bookmarkDiv).height(height);
 	bookmarkDiv.className = DEFAULT_CLASS_NAME + " defaultCategory";
 	bookmarkDiv.opacity = 1;
 	

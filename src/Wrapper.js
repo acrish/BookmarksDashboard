@@ -3,7 +3,7 @@
  * @param width the width of the wrapper div
  * @param height the height of the wrapper div
  * @param an array with all bookmark wrappers
- * @param options options for creating a bookmark
+ * @param options the options for creating a wrapper
  * @returns the newly created wrapper object with a bookmark inside.
  */
 function Wrapper(width, height, id, options) {
@@ -15,53 +15,19 @@ function Wrapper(width, height, id, options) {
 	divWrapper.className = "WrapperDiv";
 	
 	// Wrapper with normal bookmark.
+	var bookmark;
 	if (!options['isMockup']) {
 		var bookmarkWrappers = options['wrappers'];
 		
 		// Creates the bookmark.
-		var bookmark = new Bookmark(width, height, id, {"isMockup": false});
+		bookmark = new Bookmark(width, height, id, {"isMockup": false, 'localStorageId': options['localStorageId']});
 		divWrapper.appendChild(bookmark.getDiv());
 		
 		// Drag and drop event handler
-		divWrapper.ondrop = function(event) {
-			// Exchange div from source wrapper with div from destination wrapper
-			event.preventDefault();
-			var data = event.dataTransfer.getData("Text");
-			var dstDiv = event.target;
-			var srcDiv = document.getElementById(data);
-			var srcWrapper = srcDiv.parentNode;
-			var dstWrapper = dstDiv.parentNode;
-			var aux;
-			dstWrapper.removeChild(dstDiv);
-
-			// Persist (bkId, json_info) interchanged. If there won't be empty bookmarks in the 
-			// dashboard, keep only the body of last if.
-			if (localStorage[srcDiv.id] && !localStorage[dstDiv.id]) {
-				localStorage[dstDiv.id] = localStorage[srcDiv.id];
-				localStorage.removeItem(srcDiv.id);
-			}
-			else if (!localStorage[srcDiv.id] && localStorage[dstDiv.id]) {
-				localStorage[srcDiv.id] = localStorage[dstDiv.id];
-				localStorage.removeItem(dstDiv.id);
-			}
-			else if (localStorage[srcDiv.id] && localStorage[dstDiv.id]) {
-				aux = localStorage[srcDiv.id];
-				localStorage[srcDiv.id] = localStorage[dstDiv.id];
-				localStorage[dstDiv.id] = aux;
-			}
-			
-			// Interchange the bookmarks visually.
-			aux = dstDiv.id;
-			dstDiv.id = srcDiv.id;
-			srcDiv.id = aux;
-			bookmarkWrappers[srcWrapper.id].setBookmarkDiv(dstDiv);
-			bookmarkWrappers[dstWrapper.id].setBookmarkDiv(srcDiv);
-		};
-		divWrapper.ondragover = function(event) {
-			event.preventDefault();
-		};
+		dragAndDrop(divWrapper, bookmarkWrappers);
 	} else { // Wrapper with mockup bookmark.
-		// TODO
+		bookmark = new Bookmark(width, height, id, {"isMockup": true});
+		divWrapper.appendChild(bookmark.getDiv());
 	}
 	
 	/**
@@ -102,7 +68,11 @@ function Wrapper(width, height, id, options) {
 	};
 }
 
-function dragAndDrop(divWrapper) {
+/**
+ * @param divWrapper the div of the wrapper that becomes draggable
+ * @param bookmarkWrappers a list with all bookmark wrappers
+ */
+function dragAndDrop(divWrapper, bookmarkWrappers) {
 	divWrapper.ondrop = function(event) {
 		// Exchange div from source wrapper with div from destination wrapper
 		event.preventDefault();

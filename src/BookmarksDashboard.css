@@ -1,0 +1,107 @@
+html {
+ 	/*background-image: url('images/Splashscreen.jpg');*/
+ 	background-image: url('images/background-4-line.jpg');
+ 	/*background-image: url('images/plain_blue.jpg');*/
+ 	/*background-image: url('images/Tan_Plain_Background_New.jpg');*/
+	background-repeat: repeat;
+}
+
+body {
+	text-align: center;
+}
+
+#bookmarksDiv{
+	margin-top: 40px;
+	margin-left: auto;
+	margin-right: auto;	
+}
+
+#page-switcher-next{
+	float: right;
+	margin-right: 10px;
+	margin-bottom: 5%;
+	right:0;
+}
+
+#page-switcher-prev{
+	float: left;
+	margin-left: 10px;
+	margin-bottom: 5%;	
+}
+
+#settingsMenu {
+	position: absolute;
+	top:0;
+	right:0;
+	background-color: #D0D0D0;
+	-moz-border-radius-bottomleft: 15px;
+	border-bottom-left-radius: 15px;
+	background-color: #BBA28C;
+}
+
+.page-switcher:hover{
+	opacity: 1.0;
+}
+.page-switcher {
+	font-size: 50px;
+	position: fixed;
+	top: 10%;
+	bottom: 5%;
+	width:5%;
+	height: 85%;
+	color: #505050;
+	opacity: 0.0;
+	background-color:transparent;
+}
+
+.hoverImage {
+	width: 30px;
+	height: 30px;
+	float: left;
+}
+
+/* Bookmark divs */
+.WrapperDiv {
+	border-radius: 10px;
+	background-color: grey;
+	float: left;
+}
+
+.BookmarkDiv {
+	border-radius: 10px;
+	background-size: 100% 100%;
+	background-color: #FBF6F7;
+	color: #291717;
+	float: left;
+	position: relative;
+}
+
+/* Categories */
+.defaultCategory {
+	border-radius: 10px;
+	box-shadow: 10px 10px 5px orange;
+}
+
+.funCategory {
+	border-radius: 10px;
+	box-shadow: 10px 10px 5px purple;
+}
+
+.socialCategory {
+	border-radius: 10px;
+	box-shadow: 10px 10px 5px blue;
+}
+
+/* Hint on 0 messages */
+#hintMessage {
+	font-size: 30px;
+	position: absolute;
+	right: 50px;
+	top: 0;
+	vertical-align: middle;
+	color: #FBF6F7;
+}
+
+.hintImage {
+	vertical-align: middle;
+}

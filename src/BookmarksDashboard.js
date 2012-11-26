@@ -10,11 +10,18 @@ window.onload = function() {
 	if (!res)
 		alert("I don't support html5 storage! Please update your browser version.");
 	//testPersistence();
-	
+	// Get the current page on tab [0 if not found]
+	var exists = localStorage["page"];
+	var page = 0;
+
+	if (exists)
+		page = parseInt(exists);
+
 	var removeAllImage = document.getElementById("removeAllImage");
 	removeAllImage.onclick=function() {
 		if (confirm("Do you really want to remove all your bookmarks?")) {
 			localStorage.clear();
+			localStorage["page"] = 0;
 			window.location.reload();
 		}
 	};
@@ -132,3 +139,27 @@ function addToStore() {
 	//alert("No of links ==== " + localStorage["noLinks"]);
 }
 
+function next() {
+	// The variable is stored on load
+	page = parseInt(localStorage["page"]);
+	var noLinks = BkIdGenerator.getSuffix(BkIdGenerator.getNextId);
+	var maxPages = noLinks / maximumLinks;
+	
+	if (noLinks % maximumLinks != 0)
+		maxPages++;
+	if (noLinks == 0 || page + 1 == maxPages)
+		return;
+	page ++;
+}
+
+function prev() {
+	// The variable is stored on load
+	page = parseInt(localStorage["page"]);
+	var noLinks = BkIdGenerator.getSuffix(BkIdGenerator.getNextId);
+	var maximumLinks = NUM_OF_ROWS * NUM_OF_COLUMNS;
+	var maxPages = noLinks / maximumLinks;
+	
+	if (page == 0)
+		return;
+	page --;
+}

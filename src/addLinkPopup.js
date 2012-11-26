@@ -25,6 +25,15 @@ function addBookmark() {
 	thingy.heightRatio = 1;
 	localStorage[name] = JSON.stringify(thingy);
 
+//	var views = chrome.extension.getViews();
+//	alert("views");
+//	for (var i in views) {
+//	  var location = views[i].location;
+//	  if (location.pathname == '/html/application.html') {
+//	    location.reload();
+//	  }
+//	}
+	
 	window.close();
 }
 

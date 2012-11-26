@@ -114,10 +114,7 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
  * @param oldWidth
  */
 function calculateRatio(newWidth, oldWidth) {
-	var ratio = Math.floor(newWidth / oldWidth * 10) / 10;
-	if (ratio < 1) {
-		ratio += 0.1;
-	}
+	var ratio = Math.round(newWidth / oldWidth * 2) / 2;
 	return ratio;
 }
 

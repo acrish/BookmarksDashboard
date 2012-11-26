@@ -18,6 +18,8 @@ window.onload = function() {
 		page = parseInt(exists);
 	else
 		localStorage["page"] = 0;
+
+	Categories.populateDialogBox();
 	
 	var nextButton = document.getElementById("page-switcher-next");
 	nextButton.onclick = next;
@@ -128,7 +130,7 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 function getDisplayOrder() {
 	// TODO delete
 	var dd = {
-			order: "alphabetical",
+			order: "default",
 			type: null
 		};
 	localStorage["displayOrder"] = JSON.stringify(dd);

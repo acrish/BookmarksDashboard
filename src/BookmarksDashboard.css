@@ -1,7 +1,8 @@
-html { /*background-image: url('images/Splashscreen.jpg');*/
-	background-image: url('images/background-4-line.jpg');
-	/*background-image: url('images/plain_blue.jpg');*/
-	/*background-image: url('images/Tan_Plain_Background_New.jpg');*/
+html {
+ 	/*background-image: url('images/Splashscreen.jpg');*/
+ 	background-image: url('images/background-4-line.jpg');
+ 	/*background-image: url('images/plain_blue.jpg');*/
+ 	/*background-image: url('images/Tan_Plain_Background_New.jpg');*/
 	background-repeat: repeat;
 }
 
@@ -9,23 +10,23 @@ body {
 	text-align: center;
 }
 
-#bookmarksDiv {
+#bookmarksDiv{
 	margin-top: 40px;
 	margin-left: auto;
-	margin-right: auto;
+	margin-right: auto;	
 }
 
-#page-switcher-next {
+#page-switcher-next{
 	float: right;
 	margin-right: 10px;
 	margin-bottom: 5%;
-	right: 0;
+	right:0;
 }
 
-#page-switcher-prev {
+#page-switcher-prev{
 	float: left;
 	margin-left: 10px;
-	margin-bottom: 5%;
+	margin-bottom: 5%;	
 }
 
 #settingsMenu {
@@ -39,20 +40,19 @@ body {
 	padding: 5px 10px;
 }
 
-.page-switcher:hover {
+.page-switcher:hover{
 	opacity: 1.0;
 }
-
 .page-switcher {
 	font-size: 50px;
 	position: fixed;
 	top: 10%;
 	bottom: 5%;
-	width: 5%;
+	width:5%;
 	height: 85%;
 	color: #505050;
 	opacity: 0.0;
-	background-color: transparent;
+	background-color:transparent;
 }
 
 .hoverImage {

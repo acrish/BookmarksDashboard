@@ -33,7 +33,7 @@ function Bookmark(width, height, id) {
 	var bookmarkDiv = createBookmarkDiv(width, height, id);
 	
 	// Create hover div and buttons.
-	var hoverButtonsDiv = createHoverDivAndButtons(bookmarkDiv);
+	var hoverButtonsDiv = createHoverDivAndIcons(bookmarkDiv);
 	bookmarkDiv.appendChild(hoverButtonsDiv);
 	
 	// Load bookmarks links;
@@ -81,7 +81,7 @@ function Bookmark(width, height, id) {
 	this.setDiv = function(newDiv) {
 		bookmarkDiv.removeChild(hoverButtonsDiv);
 		bookmarkDiv = newDiv;
-		hoverButtonsDiv = createHoverDivAndButtons(bookmarkDiv);
+		hoverButtonsDiv = createHoverDivAndIcons(bookmarkDiv);
 		bookmarkDiv.appendChild(hoverButtonsDiv);
 	};
 
@@ -127,7 +127,7 @@ function createBookmarkDiv(width, height, id) {
 	return bookmarkDiv;
 }
 
-function createHoverDivAndButtons(bookmarkDiv) {
+function createHoverDivAndIcons(bookmarkDiv) {
 	// Create hover div.
 	var hoverButtonsDiv = document.createElement("div");
 	hoverButtonsDiv.style.position = "absolute";
@@ -142,7 +142,7 @@ function createHoverDivAndButtons(bookmarkDiv) {
 	};
 	
 	// Add image button.
-	var imageButton = createBookmarkHoverButton("Image", function() {
+	var imageButton = createBookmarkHoverImage("images/IPhoto_Icon.png", "Image", function() {
 		onHoverButtonClick = true;
 		var url = window.prompt("Enter image url:", "http://");
 		if (url != null && url != "") {
@@ -153,7 +153,7 @@ function createHoverDivAndButtons(bookmarkDiv) {
 	hoverButtonsDiv.appendChild(imageButton);
 	
 	// Add category button.
-	var categoryButton= createBookmarkHoverButton("Category", function() {
+	var categoryButton= createBookmarkHoverImage("images/category.png", "Category", function() {
 		onHoverButtonClick = true;
 		// Category
 		var category = window.prompt('Choose a category from: \n\n* '+ Categories.getAll() + "\n", 
@@ -162,6 +162,30 @@ function createHoverDivAndButtons(bookmarkDiv) {
 		bookmarkDiv.className = DEFAULT_CLASS_NAME + " " + categoryCssClass;
 	});
 	hoverButtonsDiv.appendChild(categoryButton);
+	
+	// Add remove button
+	var removeButton = createBookmarkHoverImage("images/Recycle_Bin_f.png", "Remove", 
+			function() {
+		onHoverButtonClick = true;
+		// Confirm removal
+		var bkId = this.parentNode.parentNode.id;
+		if (confirm("Really want to remove " + bkId + "?") && localStorage[bkId]) {
+			var prevId = bkId;
+			var i = BkIdGenerator.getSuffix(prevId) + 1;
+			var currId = BkIdGenerator.getId(i);
+			
+			while (localStorage[currId]) {
+				localStorage[prevId] =	localStorage[currId];
+				prevId = currId;
+				i++;
+				currId = BkIdGenerator.getId(i);
+			}
+			localStorage.removeItem(prevId); 
+			window.location.reload(true);
+		}
+		
+	});
+	hoverButtonsDiv.appendChild(removeButton);
 	
 	return hoverButtonsDiv;
 }
@@ -172,12 +196,21 @@ function createHoverDivAndButtons(bookmarkDiv) {
  * @param onclickFunction the function to be executed on button click
  * @returns the newly created button
  */
-function createBookmarkHoverButton(text, onclickFunction) {
-	var hoverButton = document.createElement("input");
-	hoverButton.type = "button";
-	hoverButton.value = text;
-	hoverButton.onclick = onclickFunction;
-	return hoverButton;
+function createBookmarkHoverImage(src, text, onclickFunction) {
+	var hoverImage = document.createElement("img");
+	hoverImage.alt = text;
+	hoverImage.src = src;
+	hoverImage.onclick = onclickFunction;	
+	hoverImage.className = "hoverImage"; 
+	hoverImage.onmouseover = function() {
+		this.style.border = "1px solid black";
+	};
+	hoverImage.onmouseout = function() {
+		this.style.border = "0";
+	};
+	
+	
+	return hoverImage;
 }
 
 function openNewBookmarkWindow() {

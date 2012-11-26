@@ -1,5 +1,9 @@
 html {
- 	background-color: #fff;
+ 	/*background-image: url('images/Splashscreen.jpg');*/
+ 	background-image: url('images/background-4-line.jpg');
+ 	/*background-image: url('images/plain_blue.jpg');*/
+ 	/*background-image: url('images/Tan_Plain_Background_New.jpg');*/
+	background-repeat: repeat;
 }
 
 body {
@@ -17,11 +21,14 @@ body {
 	top:0;
 	right:0;
 	background-color: #D0D0D0;
+	-moz-border-radius-bottomleft: 15px;
+	border-bottom-left-radius: 15px;
+	background-color: #BBA28C;
 }
 
-#removeAllImage {
-	width: 20px;
-	height: 20px;
+.hoverImage {
+	width: 30px;
+	height: 30px;
 	float: left;
 }
 
@@ -36,8 +43,11 @@ body {
 	position: relative;
 	background-size: 100% 100%;
 	float: left;
+	background-color: #FBF6F7;
+	color: #291717;
 }
 
+<<<<<<< HEAD
 /* Bookmark link */
 .bookmarkParagraph {
 	position: absolute;
@@ -48,6 +58,10 @@ body {
     width: 50%;
     height: 30%;
     margin: auto;
+=======
+.WrapperDiv {
+	float: left;
+>>>>>>> 20016dec2c9c586b3c54c9713a9a4edc23ea10c6
 }
 
 /* Categories */
@@ -73,6 +87,7 @@ body {
 	right: 50px;
 	top: 0;
 	vertical-align: middle;
+	color: #FBF6F7;
 }
 
 .hintImage {

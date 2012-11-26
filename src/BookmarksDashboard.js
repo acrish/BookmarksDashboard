@@ -18,6 +18,8 @@ window.onload = function() {
 		}
 	};
 	removeAllImage.alt="Remove All";
+	removeAllImage.className = "hoverImage";
+	removeAllImage.style.marginLeft = "15px";
 	
 	createBookmarksDivs('bookmarksDiv', NUM_OF_ROWS, NUM_OF_COLUMNS);
 };

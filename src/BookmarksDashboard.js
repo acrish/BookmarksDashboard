@@ -18,7 +18,6 @@ window.onload = function() {
 		page = parseInt(exists);
 	else
 		localStorage["page"] = 0;
-
 	
 	var nextButton = document.getElementById("page-switcher-next");
 	nextButton.onclick = next;
@@ -65,24 +64,25 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	
 	var divWidth = Math.floor(bookmarksWindowWidth / numOfColumns);
 	var divHeight = Math.floor(bookmarksWindowHeight / numOfRows);
-
+	
 	// Create wrappers and bookmarks.
-	var bookmarkWrappers = new Array();
-	//var id = 0;
-	// Id starts from current_page * numOfRows * numOfColumns 
-	var page = parseInt(localStorage["page"]);
-	var id = page * numOfRows * numOfColumns;
-	var limit = (page+1) * numOfRows * numOfColumns;
-	for (; localStorage[BkIdGenerator.getId(id)] != null && id < limit; id++) {
-		var wrapper = new Wrapper(divWidth, divHeight, id, 
-				{'isMockup': false, margin: WRAPPER_MARGIN,
-					'localStorageId': BkIdGenerator.getId(id),  'wrappers': bookmarkWrappers});
+	var displayOrder = getDisplayOrder();
+	var ids = getBookmarksIds(numOfRows, numOfColumns, displayOrder);
+	var isDraggable = true;
+	if (displayOrder.order != "default") {
+		isDraggable = false;
+	}
+ 	var bookmarkWrappers = new Array();
+ 	for (var i = 0, limit = ids.length; i < limit; i++) {
+		var wrapper = new Wrapper(divWidth, divHeight, ids[i], 
+				{isMockup: false, margin: WRAPPER_MARGIN, draggable: isDraggable,
+					localStorageId: BkIdGenerator.getId(ids[i]), wrappers: bookmarkWrappers});
 		bookmarkWrappers[wrapper.getId()] = wrapper;
 		bookmarksWindow.appendChild(wrapper.getDiv());
-	}
-	//alert("after");
+ 	}
+
 	// Make wrappers resizable.
-	if (id > 0) {
+	if (ids.length > 0) {
 		var minWidth = divWidth / 2 - WRAPPER_MARGIN;
 		var minHeight = divHeight / 2 - WRAPPER_MARGIN;
 		var gridWidth = divWidth / 2 + WRAPPER_MARGIN;
@@ -106,9 +106,10 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 		}
 		
 		// Create mockup bookmarks.
+		var page = parseInt(localStorage["page"]);
 		if (page == 0) {
-			for (; id < limit; id++) {
-				var wrapper = new Wrapper(divWidth, divHeight, id,
+			for (var i = ids.length, limit = numOfRows * numOfColumns; i < limit; i++) {
+				var wrapper = new Wrapper(divWidth, divHeight, (-1) * i, 
 						{'isMockup': true, margin: WRAPPER_MARGIN});
 				bookmarkWrappers[wrapper.getId()] = wrapper;
 				bookmarksWindow.appendChild(wrapper.getDiv());
@@ -118,6 +119,77 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 		printHintMessage(bookmarksWindow);
 		document.getElementById("settingsMenu").style.display = "none";
 	}
+}
+
+
+/**
+ * @returns the display order
+ */
+function getDisplayOrder() {
+	// TODO delete
+	var dd = {
+			order: "alphabetical",
+			type: null
+		};
+	localStorage["displayOrder"] = JSON.stringify(dd);
+	// TODO;
+	
+	// Get order from local storage.
+	var displayOrder = localStorage["displayOrder"];
+	var displayOrderObject;
+	if (displayOrder == null) {
+		displayOrderObject = {
+			order: "default",
+			type: null
+		};
+		localStorage["displayOrder"] = JSON.stringify(displayOrderObject);
+	} else {
+		displayOrderObject = JSON.parse(displayOrder);
+	}
+	
+	return displayOrderObject;
+}
+
+/**
+ * @param numOfRows
+ * @param numOfColumns
+ * @param displayOrderObject
+ * @returns {Array}
+ */
+function getBookmarksIds(numOfRows, numOfColumns, displayOrder) {
+	// Get correct ids from local storage.
+	var page = parseInt(localStorage["page"]);
+	var ids = new Array();
+	if (displayOrder.order == "default") {
+		// Id starts from current_page * numOfRows * numOfColumns .
+		var id = page * numOfRows * numOfColumns;
+		var limit = (page + 1) * numOfRows * numOfColumns;
+		for (; localStorage[BkIdGenerator.getId(id)] != null && id < limit; id++) {
+			ids.push(id);
+		}
+	} else if (displayOrder.order == "alphabetical") {
+		var objects = new Array();
+		for (var id = 0; localStorage[BkIdGenerator.getId(id)] != null; id++) {
+			var obj = {
+					localStorageId: id,
+					title: JSON.parse(localStorage[BkIdGenerator.getId(id)]).title
+			};
+			objects.push(obj);
+		}
+		
+		// Order ids.
+		objects.sort(function(a, b) {
+			return a.title.localeCompare(b.title);
+		});
+		
+		// Save ids.
+		for (var i = 0, limit = numOfRows * numOfColumns, objLimit = objects.length;
+				i < limit && i < objLimit; i++) {
+			ids.push(objects[i].localStorageId);
+		}
+	}
+	
+	return ids;
 }
 
 /**

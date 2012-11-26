@@ -41,7 +41,9 @@ function Wrapper(width, height, id, options) {
 		divWrapper.appendChild(bookmark.getDiv());
 
 		// Drag and drop event handler
-		dragAndDrop(divWrapper, options['wrappers']);
+		if (options['draggable']) {
+			dragAndDrop(divWrapper, options['wrappers']);
+		}
 	} else { // Wrapper with mockup bookmark.
 		$(divWrapper).width(width);
 		$(divWrapper).height(height);

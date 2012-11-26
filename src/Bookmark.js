@@ -173,9 +173,9 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 		var bkId = this.parentNode.parentNode.id;
 		if (confirm("Really want to remove " + bkId + "?") && localStorage[bkId]) {
 			var prevId = bkId;
-			var i = BkIdGenerator.getSuffix(prevId) + 1;
+			var i = parseInt(BkIdGenerator.getSuffix(prevId)) + 1;
 			var currId = BkIdGenerator.getId(i);
-			
+
 			while (localStorage[currId]) {
 				localStorage[prevId] =	localStorage[currId];
 				prevId = currId;

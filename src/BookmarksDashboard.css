@@ -16,6 +16,19 @@ body {
 	margin-right: auto;	
 }
 
+#page-switcher-next{
+	margin-right: 10px;
+	margin-bottom: 5%;
+	right:0;
+}
+
+#page-switcher-prev{
+	float: left;
+	margin-left: 10px;
+	margin-bottom: 5%;
+	left:0;
+}
+
 #settingsMenu {
 	position: absolute;
 	top:0;
@@ -24,6 +37,17 @@ body {
 	-moz-border-radius-bottomleft: 15px;
 	border-bottom-left-radius: 15px;
 	background-color: #BBA28C;
+}
+
+.page-switcher {
+	font-size: 50px;
+	position: absolute;
+	float: right;
+	top: 10%;
+	bottom: 5%;
+	width:5%;
+	height: 85%;
+	background-color:transparent;
 }
 
 .hoverImage {

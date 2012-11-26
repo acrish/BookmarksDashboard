@@ -157,14 +157,25 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 	// Add category button.
 	var categoryButton= createBookmarkHoverImage("images/category.png", "Category", function() {
 		onHoverButtonClick = true;
-		// Category
-		var category = window.prompt('Choose a category from: \n\n* '+ Categories.getAll() + "\n", 
-				'default');
-		var categoryCssClass = Categories.getCategoryClass(category);
-		bookmarkDiv.className = DEFAULT_CLASS_NAME + " " + categoryCssClass;
+		$("#overlay").show();
+		$("#dialog").fadeIn(300);
+        $("#overlay").unbind("click");
+		$("#btnClose").click(function (e) {
+		     HideDialog();
+		     e.preventDefault();
+		  });
+		// Prevent triggering click events for past binded objects and bind the current one.
+		$("#btnSubmit").unbind("click");
+		$("#btnSubmit").click(function (e) {
+			var categ = $("#categories input:radio:checked").val();
+			categoryCssClass = Categories.getCategoryClass(categ);
+			bookmarkDiv.className = DEFAULT_CLASS_NAME + " " + categoryCssClass;
+			HideDialog();
+			e.preventDefault();
+		});
 	});
 	hoverButtonsDiv.appendChild(categoryButton);
-	
+
 	// Add remove button
 	var removeButton = createBookmarkHoverImage("images/Recycle_Bin_f.png", "Remove", 
 			function() {
@@ -202,8 +213,16 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 }
 
 /**
+ * Called to close the dialog popup window.
+ */
+function HideDialog() {
+   $("#overlay").hide();
+   $("#dialog").fadeOut(300);
+}
+
+/**
  * Creates a hover button.
- * @param text the text inside the button // TODO(cmihail): change with image
+ * @param text tooltip on icon
  * @param onclickFunction the function to be executed on button click
  * @returns the newly created button
  */

@@ -32,6 +32,8 @@ window.onload = function() {
 	removeAllImage.className = "hoverImage";
 	removeAllImage.style.marginLeft = "15px";
 	
+	Categories.populateDialogBox();
+
 	var nextButton = document.getElementById("page-switcher-next");
 	nextButton.onclick = next;
 	var prevButton = document.getElementById("page-switcher-prev");

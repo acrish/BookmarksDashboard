@@ -35,9 +35,12 @@ function Bookmark(width, height, id, options) {
 		pageLink = obj.link;
 		
 		var bookmarkParagraph = document.createElement("p");
+		bookmarkParagraph.style.marginTop = "20%";
+		
 		var bookmarkTxt = document.createElement("a");
 		bookmarkTxt.innerHTML = obj.title;
 		bookmarkTxt.href = pageLink;
+		bookmarkTxt.style.textDecoration = "none";
 		bookmarkParagraph.appendChild(bookmarkTxt);
 		
 		// Category.
@@ -57,6 +60,7 @@ function Bookmark(width, height, id, options) {
 		bookmarkParagraph.innerHTML = "When you are on a page you want to save, click on " +
 			"<img src='images/lightbulb.png' class='hintImage' />" +
 			" to add it to bookmarks ";
+		bookmarkParagraph.style.marginTop = "20%";
 	}
 	bookmarkDiv.appendChild(bookmarkParagraph);
 

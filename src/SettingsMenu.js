@@ -23,19 +23,32 @@ function createSettingsMenu(globalSettings) {
 		$("#btnSubmitSettings").click(function (e) {
 			var resize = $("input[name='resize']:checkbox:checked").val();
 			if (resize) {
-				//TODO cmihail: resize to default
+				for (var id = 0; localStorage[BkIdGenerator.getId(id)] != null; id++) {
+					var obj = JSON.parse(localStorage[BkIdGenerator.getId(id)]);
+					obj.widthRatio = 1;
+					obj.heightRatio = 1;
+					localStorage[BkIdGenerator.getId(id)] = JSON.stringify(obj);
+				}
 			}
 			
 			var orderCriteria = $("#orderingCriteriaSelection input:radio:checked").val();
-			//TODO cmihail: order bookmarks on selected criteria
 			if (orderCriteria == "dragndrop") {
-				alert("Default ordering");
+				var displayOrder = {
+					order: "default",
+				};
+				localStorage["displayOrder"] = JSON.stringify(displayOrder);
 			}
 			else if (orderCriteria == "alphabetically") {
-				alert("Alphabetical ordering");
+				var displayOrder = {
+					order: "alphabetical",
+				};
+				localStorage["displayOrder"] = JSON.stringify(displayOrder);
 			}
 			else if (orderCriteria == "oncategory") {
-				alert("Order on category");
+				var displayOrder = {
+					order: "category",
+				};
+				localStorage["displayOrder"] = JSON.stringify(displayOrder);
 			}
 			
 			var selectedBg = $("#backgroundImageSelect option:selected").val();
@@ -51,6 +64,13 @@ function createSettingsMenu(globalSettings) {
 
 			HideGlobalDialog(false);
 			e.preventDefault();
+			
+			// Refresh all new tab pages to show the new bookmark.
+			var views = chrome.extension.getViews();
+			for (var i in views) {
+				var location = views[i].location;
+				location.reload();
+			}
 		});
 	};
 }

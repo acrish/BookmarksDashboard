@@ -135,21 +135,12 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
  * @returns the display order
  */
 function getDisplayOrder() {
-	// TODO delete
-	var dd = {
-			order: "default",
-			type: "fun"
-		};
-	localStorage["displayOrder"] = JSON.stringify(dd);
-	// TODO;
-	
 	// Get order from local storage.
 	var displayOrder = localStorage["displayOrder"];
 	var displayOrderObject;
 	if (displayOrder == null) {
 		displayOrderObject = {
 			order: "default",
-			type: null
 		};
 		localStorage["displayOrder"] = JSON.stringify(displayOrderObject);
 	} else {
@@ -197,15 +188,20 @@ function getBookmarksIds(numOfRows, numOfColumns, displayOrder) {
 	} else if (displayOrder.order == "category") {
 		var objects = new Array();
 		for (var id = 0; localStorage[BkIdGenerator.getId(id)] != null; id++) {
-			if (JSON.parse(localStorage[BkIdGenerator.getId(id)]).categ == displayOrder.type) {
-				objects.push(id);				
-			}
+			var obj = {
+					localStorageId: id,
+					categ: JSON.parse(localStorage[BkIdGenerator.getId(id)]).categ
+			};
+			objects.push(obj);
 		}
-		
+		// Order ids.
+		objects.sort(function(a, b) {
+			return a.categ.localeCompare(b.categ);
+		});
 		// Save ids.
 		for (var i = page * numOfRows * numOfColumns, objLimit = objects.length,
 				limit = (page + 1) * numOfRows * numOfColumns; i < limit && i < objLimit; i++) {
-			ids.push(objects[i]);
+			ids.push(objects[i].localStorageId);
 		}
 	} else {
 		alert("There was an internal problem");

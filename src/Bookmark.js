@@ -1,5 +1,5 @@
 var DEFAULT_CLASS_NAME = "BookmarkDiv";
-
+var MAXIMUM_PAGE_LINKS = 12;
 var onHoverButtonClick = false; // Workaround for div/button click bug.
 
 /**
@@ -189,17 +189,16 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 				prevId = currId;
 				i++;
 				currId = BkIdGenerator.getId(i);
-				
-				// Added for prev & next buttons
-				var noLinks = BkIdGenerator.getSuffix(currId);
-				var page = parseInt(localStorage["page"]);
-					
-				if (noLinks / (MAXIMUM_PAGE_LINKS + 1) != page) {
-					page--;
-					localStorage["page"] = page;
-				}
 			}
 			localStorage.removeItem(prevId); 
+			
+			// Added for prev & next buttons
+			i--;
+			var page = parseInt(localStorage["page"]);			
+			if (Math.floor(i / (MAXIMUM_PAGE_LINKS+1)) != page) {
+				page--;
+				localStorage["page"] = page;
+			}
 			window.location.reload(true);
 		}
 		

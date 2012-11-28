@@ -41,5 +41,5 @@ BkIdGenerator.getId = function(which) {
  */
 BkIdGenerator.getSuffix = function(id) {
 	
-	return id.substring(BkIdGenerator.idTemplate.length);
+	return parseInt(id.substring(BkIdGenerator.idTemplate.length));
 };

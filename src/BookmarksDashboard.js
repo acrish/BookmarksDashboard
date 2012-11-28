@@ -9,7 +9,6 @@ window.onload = function() {
 	var res = supports_html5_storage();
 	if (!res)
 		alert("I don't support html5 storage! Please update your browser version.");
-	//testPersistence();
 	// Get the current page on tab [0 if not found]
 	var exists = localStorage["page"];
 	var page = 0;
@@ -18,7 +17,7 @@ window.onload = function() {
 		page = parseInt(exists);
 	else
 		localStorage["page"] = 0;
-
+		
 	Categories.populateDialogBox();
 	
 	var nextButton = document.getElementById("page-switcher-next");

@@ -9,9 +9,6 @@ function addBookmark() {
 	// Adding bookmark
 	var url = document.getElementById("tabUrl").value;
 	var descr = document.getElementById("tabTitle").value;
-	
-	//var index=document.getElementById("categ").selectedIndex;
-	//var category = (document.getElementsByTagName("option"))[index].value);
 	var select = document.getElementById("categ");
 	var category = select.options[select.selectedIndex].value;
 	var name = BkIdGenerator.getNextId();

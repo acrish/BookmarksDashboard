@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
 <head>
@@ -8,11 +8,29 @@
 	<script src="BkIdGenerator.js"></script>
 </head>
 <body>
-	<form id="MyForm">
-		Title: <input id="tabTitle" type="text" size=15><br>
-		Link:  <input id="tabUrl" type="text" size=20><br>
-		Category: <input id="category" type="text" size=20 value="default"><br>
+	<div id="global_dialog">
+	<div class="web_dialog_title">
+			Add Bookmark
+	</div>
+
+	<div id="MyForm" class="web_dialog">
+		<div class="prefix margin30">Title:<br/>
+			<input id="tabTitle" type="text" size=25><br>
+		</div>
+		<div class="prefix margin30">Link:<br/>
+			<input id="tabUrl" type="text" size=25><br>
+		</div>
+		<div class="prefix margin30">Category:
+			<select id="categ">
+					<option value="default">Default</option>
+					<option value="fun">Fun</option>
+					<option value="social">Social</option>
+			</select>
+		</div>
 		<button type="button">Add</button>
 		<button type="button">Cancel</button>
-	</form>
+		<!--<input id="category" type="text" size=20 value="default"><br>-->
+		
+	</div>
+	</div>
 </body>

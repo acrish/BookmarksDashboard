@@ -1,22 +1,22 @@
-//alert("intra pe aici--------??");
 function getLink() {
-	// alert("intra pe aici??");
 	chrome.tabs.getSelected(null, function(tab) {
 		document.getElementById("tabUrl").value = tab.url;
 		document.getElementById("tabTitle").value = tab.title;
 	});
 }
 
-function addBookmark() {
+function addBookmark() {	
 	// Adding bookmark
 	var url = document.getElementById("tabUrl").value;
-	var category = document.getElementById("category").value;
 	var descr = document.getElementById("tabTitle").value;
-	if (category == "")
-		category = "Default";
 	
+	//var index=document.getElementById("categ").selectedIndex;
+	//var category = (document.getElementsByTagName("option"))[index].value);
+	var select = document.getElementById("categ");
+	var category = select.options[select.selectedIndex].value;
 	var name = BkIdGenerator.getNextId();
 	var thingy = {};
+	
 	thingy.link = url;
 	thingy.title = descr;
 	thingy.categ = category;

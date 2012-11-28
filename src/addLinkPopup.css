@@ -1,14 +1,40 @@
 html {
  	background-color: #eee;
 }
-
 body {
 	text-color: #aae;
 }
-
-#MyForm {
-	width: auto;
-	height: auto;
-	margin-left: auto;
-	margin-right: auto;	
+button { 
+	margin: 10px;
+	border: 1px solid #336699;
+}
+.web_dialog {
+   position: fixed;
+   width: 200px;
+   height: 155px;
+   background-color: #ffffff;
+   border: 2px solid #336699;
+   padding: 0px;
+   z-index: 102;
+   font-family: Verdana;
+   font-size: 10pt;
+}
+.web_dialog_title {
+   text-align: center;
+   border-bottom: solid 2px #336699;
+   background-color: #336699;
+   padding: 4px;
+   color: White;
+   font-weight:bold;
+}
+#global_dialog {
+	width: 204px;
+	height: 190px;
+}
+.margin30 {
+	margin: 2px;
+}
+.prefix {
+	font-weight: bold;
+	text-align: left;	
 }

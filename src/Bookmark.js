@@ -206,7 +206,7 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 	});
 	hoverButtonsDiv.appendChild(removeButton);
 	
-		// Add settings button.
+	/*	// Add settings button.
 	var settingsIcon= createBookmarkHoverImage("images/setting.png", "Settings", function() {
 		onHoverButtonClick = true;
 		// Load settings dialog
@@ -214,7 +214,7 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 		//TODO make the settings persistent
 		});
 	hoverButtonsDiv.appendChild(settingsIcon);
-
+	*/
 	return hoverButtonsDiv;
 }
 

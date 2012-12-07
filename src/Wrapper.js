@@ -93,6 +93,19 @@ function Wrapper(width, height, id, options) {
 		obj.heightRatio = newHeightRatio;
 		localStorage[options['localStorageId']] = JSON.stringify(obj);
 	};
+
+	/**
+	 *  Resizes the wrapper and the inner bookmark.
+	 */
+	this.resizeWrapper = function(newWidthRatio, newHeightRatio) {
+		widthRatio = newWidthRatio;
+		heightRatio = newHeightRatio;
+		var newWidth = calculateNewDimension(width, newWidthRatio, margin);
+		var newHeight = calculateNewDimension(height, newHeightRatio, margin);
+		$(divWrapper).width(newWidth);
+		$(divWrapper).height(newHeight);
+		bookmark.setDimensions(newWidth, newHeight);
+	};
 	
 	/**
 	 * Sets the new bookmark div.
@@ -131,7 +144,6 @@ function dragAndDrop(divWrapper, bookmarkWrappers) {
 		if (!localStorage[srcDiv.id] || !localStorage[dstDiv.id]) {
 			return;
 		}
-		
 		dstWrapperDiv.removeChild(dstDiv);
 
 		// Persist (bkId, json_info) interchanged.
@@ -139,13 +151,19 @@ function dragAndDrop(divWrapper, bookmarkWrappers) {
 		aux = localStorage[srcDiv.id];
 		localStorage[srcDiv.id] = localStorage[dstDiv.id];
 		localStorage[dstDiv.id] = aux;
-		
+				
 		// Interchange the bookmarks visually.
 		aux = dstDiv.id;
 		dstDiv.id = srcDiv.id;
 		srcDiv.id = aux;
 		bookmarkWrappers[srcWrapperDiv.id].setBookmarkDiv(dstDiv);
 		bookmarkWrappers[dstWrapperDiv.id].setBookmarkDiv(srcDiv);
+		
+		// Resize bookmarks to new values.
+		var obj = JSON.parse(localStorage[srcDiv.id]);
+		bookmarkWrappers[srcWrapperDiv.id].resizeWrapper(obj.widthRatio, obj.heightRatio);
+		obj = JSON.parse(localStorage[dstDiv.id]);
+		bookmarkWrappers[dstWrapperDiv.id].resizeWrapper(obj.widthRatio, obj.heightRatio);
 	};
 	divWrapper.ondragover = function(event) {
 		event.preventDefault();

@@ -72,7 +72,7 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	var bookmarksWindowWidth = parseInt(bookmarksWindow.style.width);
 	var bookmarksWindowHeight = parseInt(bookmarksWindow.style.height);
 	bookmarksWindowWidth -= bookmarksWindowWidth / 10; // Necessary for css styling.
-	bookmarksWindowHeight -= bookmarksWindowHeight / 10; // TODO maybe padding instead
+	bookmarksWindowHeight -= bookmarksWindowHeight / 10;
 	
 	var divWidth = Math.floor(bookmarksWindowWidth / numOfColumns);
 	var divHeight = Math.floor(bookmarksWindowHeight / numOfRows);
@@ -95,8 +95,8 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 
 	// Make wrappers resizable.
 	if (ids.length > 0) {
-		var minWidth = divWidth / 2 - WRAPPER_MARGIN;
-		var minHeight = divHeight / 2 - WRAPPER_MARGIN;
+		var minWidth = divWidth;
+		var minHeight = divHeight;
 		var gridWidth = divWidth / 2 + WRAPPER_MARGIN;
 		var gridHeight = divHeight / 2 + WRAPPER_MARGIN;
 		var maxWidth = (divWidth + WRAPPER_MARGIN) * 2;
@@ -105,6 +105,7 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 			$("#" + wrapper).resizable({
 				ghost: true,
 				grid: [gridWidth, gridHeight],
+//				aspectRatio: true,
 				minWidth: minWidth,
 				minHeight: minHeight,
 				maxWidth: maxWidth,
@@ -120,7 +121,8 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	// Create mockup bookmarks.
 	var page = parseInt(localStorage["page"]);
 	if (page == 0) {
-		for (var i = ids.length, limit = numOfRows * numOfColumns; i < limit; i++) {
+		//for (var i = ids.length, limit = numOfRows * numOfColumns; i < limit; i++) {
+		if (ids.length < numOfRows * numOfColumns) {
 			var wrapper = new Wrapper(divWidth, divHeight, (-1) * i, 
 					{'isMockup': true, margin: WRAPPER_MARGIN});
 			bookmarkWrappers[wrapper.getId()] = wrapper;

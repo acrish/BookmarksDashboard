@@ -262,6 +262,7 @@ function updateCategory(id, category) {
 function createBookmarkHoverImage(src, text, onclickFunction) {
 	var hoverImage = document.createElement("img");
 	hoverImage.alt = text;
+	hoverImage.title = text;
 	hoverImage.src = src;
 	hoverImage.onclick = onclickFunction;	
 	hoverImage.className = "hoverImage"; 

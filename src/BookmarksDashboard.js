@@ -17,7 +17,8 @@ window.onload = function() {
 		page = parseInt(exists);
 	else
 		localStorage["page"] = 0;
-		
+
+	Categories.load();
 	Categories.populateDialogBox();
 	
 	var nextButton = document.getElementById("page-switcher-next");

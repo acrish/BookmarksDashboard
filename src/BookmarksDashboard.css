@@ -74,22 +74,9 @@ body {
 	position: relative;
 }
 
-/* Categories */
-.defaultCategory {
-	border-radius: 10px;
-	box-shadow: 10px 10px 5px orange;
-}
+/* Categories added dinamically*/
 
-.funCategory {
-	border-radius: 10px;
-	box-shadow: 10px 10px 5px purple;
-}
-
-.socialCategory {
-	border-radius: 10px;
-	box-shadow: 10px 10px 5px blue;
-}
-
+/* Popups */
 .web_dialog_overlay {
    position: fixed;
    top: 0;

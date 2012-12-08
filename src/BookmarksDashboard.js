@@ -18,8 +18,8 @@ window.onload = function() {
 	else
 		localStorage["page"] = 0;
 
-	Categories.load();
-	Categories.populateDialogBox();
+	Categories.load("newCategDiv");
+	Categories.populateDialogBox("categories", false);
 	
 	var nextButton = document.getElementById("page-switcher-next");
 	nextButton.onclick = next;

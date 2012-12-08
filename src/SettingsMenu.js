@@ -62,6 +62,15 @@ function createSettingsMenu(globalSettings) {
 				$("html").css("background", '#fff');
 			}
 
+			var newCategName = $("#new_categ_name").val();
+			var newCategColor = $("#new_categ_color").val();
+			if (newCategName != "" && newCategColor != "") 
+				if (Categories.size() < Categories.maxSize) {
+					Categories.add(newCategName, newCategColor);
+				}
+				else
+					alert("Too many categories already!");
+			
 			HideGlobalDialog(false);
 			e.preventDefault();
 			

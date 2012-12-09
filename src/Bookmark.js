@@ -40,7 +40,10 @@ function Bookmark(width, height, id, options) {
 		var bookmarkTxt = document.createElement("a");
 		bookmarkTxt.innerHTML = obj.title;
 		bookmarkTxt.href = pageLink;
+		bookmarkTxt.style.fontSize = "18px";
 		bookmarkTxt.style.textDecoration = "none";
+		bookmarkTxt.style.color = "white";
+		bookmarkTxt.style.textShadow=" 0px 0px 25px black , 0px 0px 20px black , 0px 0px 15px black, 0px 0px 10px black, 0px 0px 5px black, 0px 0px 5px black";
 		bookmarkParagraph.appendChild(bookmarkTxt);
 		
 		// Category.

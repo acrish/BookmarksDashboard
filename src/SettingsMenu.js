@@ -22,6 +22,8 @@ function createSettingsMenu(globalSettings) {
 		$("#btnSubmitSettings").unbind("click");
 		$("#btnSubmitSettings").click(function (e) {
 			var resize = $("input[name='resize']:checkbox:checked").val();
+			var clearAll = $("input[name='clearAll']:checkbox:checked").val();
+			
 			if (resize) {
 				for (var id = 0; localStorage[BkIdGenerator.getId(id)] != null; id++) {
 					var obj = JSON.parse(localStorage[BkIdGenerator.getId(id)]);
@@ -70,6 +72,12 @@ function createSettingsMenu(globalSettings) {
 				}
 				else
 					alert("Too many categories already!");
+			
+			// Clear local storage
+			if (clearAll && confirm("Do you really want to remove all your bookmarks?")) {
+				localStorage.clear();
+				localStorage["page"] = 0;
+			}
 			
 			HideGlobalDialog(false);
 			e.preventDefault();

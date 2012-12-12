@@ -47,7 +47,11 @@ function createGlobalMenu() {
 	var removeAllImage = document.getElementById("removeAllImage");
 	removeAllImage.onclick=function() {
 		if (confirm("Do you really want to remove all your bookmarks?")) {
-			localStorage.clear();
+			var lastId = BkIdGenerator.getSuffix(BkIdGenerator.getNextId());
+			for (var i=0; i<lastId; i++) {
+				var id = BkIdGenerator.getId(i);
+				localStorage.removeItem(id);
+			}
 			localStorage["page"] = 0;
 			window.location.reload();
 		}

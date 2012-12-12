@@ -15,6 +15,13 @@
 	margin: 30px;
 }
 
+.margin10 {
+	margin-top		: 10px;
+	margin-bottom	: 10px;
+	margin-left		: 30px;
+	margin-right	: 30px;
+}
+
 .prefix {
 	font-weight: bold;
 	text-align: left;	

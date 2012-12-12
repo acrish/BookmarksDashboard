@@ -102,15 +102,14 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	if (ids.length > 0) {
 		var minWidth = divWidth;
 		var minHeight = divHeight;
-		var gridWidth = divWidth / 2 + WRAPPER_MARGIN;
-		var gridHeight = divHeight / 2 + WRAPPER_MARGIN;
+		var gridWidth = divWidth + 2 * WRAPPER_MARGIN;
+		var gridHeight = divHeight + 2 * WRAPPER_MARGIN;
 		var maxWidth = (divWidth + WRAPPER_MARGIN) * 2;
 		var maxHeight = (divHeight + WRAPPER_MARGIN) * 2;
 		for (var wrapper in bookmarkWrappers) {
 			$("#" + wrapper).resizable({
 				ghost: true,
 				grid: [gridWidth, gridHeight],
-//				aspectRatio: true,
 				minWidth: minWidth,
 				minHeight: minHeight,
 				maxWidth: maxWidth,

@@ -31,7 +31,13 @@ function Bookmark(width, height, id, options) {
 		
 		// Inside link.
 		var obj = JSON.parse(info);
-		bookmarkDiv.style.backgroundImage = "url('" + obj.image + "')";
+		
+		// Load background image or url preview
+		if (obj.image == "")
+			bookmarkDiv.style.backgroundImage = "url('" + "http://open.thumbshots.org/image.pxf?url="+obj.link + "')";
+		else
+			bookmarkDiv.style.backgroundImage = "url('" + obj.image + "')";
+			
 		pageLink = obj.link;
 		
 		var bookmarkParagraph = document.createElement("p");
@@ -59,11 +65,8 @@ function Bookmark(width, height, id, options) {
 			}
 		});
 		
-	} else { // Add a mockup text.
-		bookmarkParagraph.innerHTML = "When you are on a page you want to save, click on " +
-			"<img src='images/lightbulb.png' class='hintImage' />" +
-			" to add it to bookmarks ";
-		bookmarkParagraph.style.marginTop = "20%";
+	} else { // Add a mockup image.
+		bookmarkDiv.style.backgroundImage = "url('images/Plus-icon.png')";
 	}
 	bookmarkDiv.appendChild(bookmarkParagraph);
 

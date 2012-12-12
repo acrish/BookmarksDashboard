@@ -49,10 +49,8 @@ function Wrapper(width, height, id, options) {
 		$(divWrapper).height(height);
 		
 		bookmark = new Bookmark(width, height, id, {"isMockup": true});
-		//bookmark.onclick = function () { window.open("addLinkPopup.html"); };
-		//bookmark.addEventListener('click', function(){ window.open("addLinkPopup.html"); });
-		divWrapper.appendChild(bookmark.getDiv());
 		
+		divWrapper.appendChild(bookmark.getDiv());
 		divWrapper.onclick = function () { window.open("addLinkPopup.html", 'Add Bookmark','height=225,width=220'); };
 	}
 	

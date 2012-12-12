@@ -72,6 +72,7 @@ function createGlobalMenu() {
  * @param numOfRows the number of rows
  * @param numOfColumns the number of columns
  */
+var bookmarkWrappers = new Array();
 function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	var bookmarksWindow = document.getElementById(bookmarksWindowId);
 	var bookmarksWindowWidth = parseInt(bookmarksWindow.style.width);
@@ -89,7 +90,7 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	if (displayOrder.order != "default") {
 		isDraggable = false;
 	}
- 	var bookmarkWrappers = new Array();
+ 	
  	for (var i = 0, limit = ids.length; i < limit; i++) {
 		var wrapper = new Wrapper(divWidth, divHeight, ids[i], 
 				{isMockup: false, margin: WRAPPER_MARGIN, draggable: isDraggable,
@@ -125,7 +126,6 @@ function createBookmarksDivs(bookmarksWindowId, numOfRows, numOfColumns) {
 	// Create mockup bookmarks.
 	var page = parseInt(localStorage["page"]);
 	if (page == 0) {
-		//for (var i = ids.length, limit = numOfRows * numOfColumns; i < limit; i++) {
 		if (ids.length < numOfRows * numOfColumns) {
 			var wrapper = new Wrapper(divWidth, divHeight, (-1) * i, 
 					{'isMockup': true, margin: WRAPPER_MARGIN});

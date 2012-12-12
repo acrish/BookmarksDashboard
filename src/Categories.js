@@ -113,7 +113,46 @@ Categories.addToDialogBox = function (categories, disable, c, i){
 	input.id = "categ" + i;
 	input.name = "categ";
 	input.value = c;
-	input.disabled = disable;
 	input.style.margin = "10px";
+	if (disable) {
+		input.onclick = function() {
+			var old_categ_name = c;
+			var old_categ_color = Categories.validCategories[c];
+			var new_name_default = document.getElementById("new_name");
+			new_name_default.value = c;
+			
+			var globalDialog = document.getElementById('global_dialog');
+			globalDialog.style.opacity = 0.7;
+			
+			var overlay = document.getElementById("overlay");
+			overlay.style.zIndex = parseInt(overlay.style.zIndex) + 10; //TODO why doesn't work?
+			$("#overlay").show();
+			$("#edit_categ_dialog").fadeIn(300);
+	        $("#overlay").unbind("click");
+			// Prevent triggering click events for past binded objects and bind the current one.
+			$("#btnSubmitEditCateg").unbind("click");
+			$("#btnSubmitEditCateg").click(function (e) {
+				var newCategName = $("#new_name").val();
+				var newCategColor = $("#new_color").val();
+				if (newCategName != "" && newCategColor != "") {
+					for (var id = 0; localStorage[BkIdGenerator.getId(id)] != null; id++) {
+						var obj = JSON.parse(localStorage[BkIdGenerator.getId(id)]);
+						if (obj.categ == old_categ_name) {
+							obj.categ = newCategName;
+						}
+						localStorage[BkIdGenerator.getId(id)] = JSON.stringify(obj);
+					}
+					delete Categories.validCategories[old_categ_name];
+					Categories.validCategories[newCategName] = newCategColor;
+					span.style.color = newCategColor;
+					span.innerHTML = newCategName;
+					localStorage['Allcategories'] = Categories.getAll();
+				}
+				overlay.style.zIndex = parseInt(overlay.style.zIndex) - 10;
+				HideDialog("edit_categ_dialog");
+				globalDialog.style.opacity = 1;
+			});
+		};
+	}
 	categories.insertBefore(input, categories.children[0]);
 };

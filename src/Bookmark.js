@@ -163,7 +163,7 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 		$("#categories_dialog").fadeIn(300);
         $("#overlay").unbind("click");
 		$("#btnClose").click(function (e) {
-		     HideDialog();
+		     HideDialog("categories_dialog");
 		     e.preventDefault();
 		  });
 		// Prevent triggering click events for past binded objects and bind the current one.
@@ -172,7 +172,7 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 			var categ = $("#categories input:radio:checked").val();
 			categoryCssClass = Categories.getCategoryClass(categ);
 			bookmarkDiv.className = DEFAULT_CLASS_NAME + " " + categoryCssClass;
-			HideDialog();
+			HideDialog("categories_dialog");
 			e.preventDefault();			
 			updateCategory(id, categ);
 		});
@@ -226,9 +226,9 @@ function createHoverDivAndIcons(bookmarkDiv, id) {
 /**
  * Called to close the dialog popup window.
  */
-function HideDialog() {
+function HideDialog(id) {
    $("#overlay").hide();
-   $("#categories_dialog").fadeOut(300);
+   $("#" + id).fadeOut(300);
 }
    
 /**

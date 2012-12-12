@@ -7,6 +7,14 @@
 	margin-top: -120px;
 }
 
+#edit_categ_dialog {
+	display: none;
+	background-color: #ffffff;
+    border: 2px solid #336699;
+    prosition: absolute;
+    z-index: 2053;
+}
+
 #orderingCriteriaSelection {
 	text-align: left;
 }

@@ -5,8 +5,34 @@ function getLink() {
 	});
 }
 
+function populateCategory() {
+	var validCategories = localStorage['Allcategories'];
+	
+	if (validCategories == null) {
+		alert("null categ");
+		return;
+	}
+	
+	var categs = validCategories.split("\n");
+	var parent = document.getElementById("categ");
+	if (parent == null)
+		return;
+		
+	for (var i = 0; i < categs.length; i++) {
+		var pair = categs[i].split(" - ");	
+		var anOption = document.createElement("option");
+		
+		anOption.innerHTML = pair[0];
+		anOption.value = pair[0];
+		
+		parent.appendChild(anOption);
+	}
+}
+
 function addBookmark() {	
 	// Adding bookmark
+	//populateCategory();
+	
 	var url = document.getElementById("tabUrl").value;
 	var descr = document.getElementById("tabTitle").value;
 	var select = document.getElementById("categ");
@@ -35,6 +61,7 @@ function addBookmark() {
 function closePopup() {
 	window.close();
 }
+
 document.addEventListener('DOMContentLoaded', function() {
 	var bts = document.querySelectorAll('button');
 	if (bts.length == 2) {
@@ -42,4 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		bts[1].addEventListener('click', closePopup);
 	}
 });
+window.onload = function() {
 getLink();
+populateCategory();
+}
